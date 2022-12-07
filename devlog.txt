@@ -1,10 +1,11 @@
-<Team Name (minus "team")>
-<Member Bubbles>
-<Member Buttercup>
-<Member Blossom>
-pd <pd#>
+Mega Nuclear Super Jesus
+Jacob Guo
+Sam Cowan
+Marc Jiang
+Nicole Zhou
+pd 7
 ---------------------
-<Project Title/Description>
+p1 - arRESTed Development
 
 
  ______   ______   __   __   __       ______   _______     
@@ -18,7 +19,23 @@ pd <pd#>
 ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 
 
-fristL -- TIMESTAMP
+jacobG, marcJ, nicoleZ, samC -- 2022-12-03 20:00
 --------------------------------------------------------------
-<Thing fristL did.>
+- As a group, started fleshing out the design doc, mainly with
+possible ideas and links
+--------------------------------------------------------------
+
+jacobG, marcJ, nicoleZ, samC -- 2022-12-05 22:00
+--------------------------------------------------------------
+- As a group, finished the design doc
+- Added design to repo
+--------------------------------------------------------------
+
+jacobG, marcJ, nicoleZ, samC -- 2022-12-06 21:00
+--------------------------------------------------------------
+FDBK: Minor print and format issues with doc. Make better MVP
+and improve clarity.
+- Did revisions and updated repo 
+--------------------------------------------------------------
+
 ==============================================================
