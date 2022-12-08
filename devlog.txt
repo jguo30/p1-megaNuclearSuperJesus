@@ -38,4 +38,13 @@ and improve clarity.
 - Did revisions and updated repo 
 --------------------------------------------------------------
 
+jacobG, marcJ, nicoleZ, samC -- 2022-12-07 19:00
+--------------------------------------------------------------
+FDBK: Missing component map.
+- DD Revisions: Created a new and super good component map
+  and updated repo.
+- Created working Flask app shell
+- Updated launch codes/README.md and requirements.txt
+--------------------------------------------------------------
+
 ==============================================================
