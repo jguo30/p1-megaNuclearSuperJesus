@@ -50,6 +50,7 @@ FDBK: Missing component map.
 samc -- 2022-12-08
 --------------------------------------------------------------
 - Updating and improving on the python drivers
+- Able to display one of the APIs on the site
 --------------------------------------------------------------
 
 jacobG -- 2022-12-08
