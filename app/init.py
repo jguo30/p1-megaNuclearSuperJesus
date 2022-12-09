@@ -7,8 +7,8 @@ def display():
     return render_template("main.html")
 @app.route("/results", methods = ["POST", "GET"])
 def results():
-    lat = 40
-    lon = -74
+    lat = int(request.form["Lat"])
+    lon = int(request.form["Long"])
     dist = 50
     code = int(request.form["Code"])
     num = 5
