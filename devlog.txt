@@ -47,4 +47,16 @@ FDBK: Missing component map.
 - Updated launch codes/README.md and requirements.txt
 --------------------------------------------------------------
 
+samc -- 2022-12-08
+--------------------------------------------------------------
+- Updating and improving on the python drivers
+- Able to display one of the APIs on the site
+--------------------------------------------------------------
+
+jacobG -- 2022-12-08
+--------------------------------------------------------------
+- Made API cards and submitted to the KB for Bing Maps and 
+College Scorecard
+--------------------------------------------------------------
+
 ==============================================================
