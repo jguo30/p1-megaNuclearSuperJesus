@@ -26,6 +26,26 @@ def results():
         #print(i)
         results.append(i["DisplayName"])
         #print(i["DisplayName"])
+
+    # weatherUrl = f'https://archive-api.open-meteo.com/v1/era5?latitude={lat}&longitude={lon}&start_date=2021-01-01&end_date=2021-12-31&daily=temperature_2m_max,temperature_2m_min&timezone=America%2FNew_York&temperature_unit=fahrenheit&windspeed_unit=mph'
+    # r = requests.get(weatherUrl)
+    # data = r.json()
+    # weather_results = [[] for i in range(12)]
+    # months = []
+    # for i in range(365):
+    #     max = float(data["daily"]["temperature_2m_max"][i])
+    #     min = float(data["daily"]["temperature_2m_min"][i])
+    #     date = data["daily"]["time"][i]
+    #     print(date)
+    #     mon = int(date[5:7])
+    #     #print(mon)
+    #     mid = (max + min) / 2
+    #     weather_results[mon].append(mid)
+    # print(weather_results)
+    # for i in range(12):
+    #     average = sum(weather_results[i]) / len(weather_results[i])
+    #     months.append(average)
+
     return render_template("results.html", poi = results)
     
 @app.route("/code", methods = ["POST", "GET"])                   
