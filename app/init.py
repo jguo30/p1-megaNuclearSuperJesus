@@ -5,6 +5,7 @@ app = app = Flask(__name__)
 @app.route("/", methods = ["POST", "GET"])                   
 def display():
     return render_template("main.html")
+
 @app.route("/results", methods = ["POST", "GET"])
 def results():
     lat = float(request.form["Lat"])
@@ -26,10 +27,18 @@ def results():
         results.append(i["DisplayName"])
         #print(i["DisplayName"])
     return render_template("results.html", poi = results)
+    
 @app.route("/code", methods = ["POST", "GET"])                   
 def code():
     code = int(request.form["Code"])
     return redirect("/")
+
+@app.route("/register", methods = ["POST","GET"])
+def reg():
+    if request.method == "GET":
+        return render_template("register.html")
+    elif request.methid == "POST":
+        
 
 if __name__ == "__main__": 
     app.debug = True                                                                                                        
