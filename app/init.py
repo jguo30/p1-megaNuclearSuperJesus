@@ -1,7 +1,11 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, Response, session
+from db import add_to_db, in_table, correct_passwd
 import requests
 code = 7997
 app = app = Flask(__name__)      
+app.secret_key = "6gBvzKwE8RWOt6amHzNz"
+
+
 @app.route("/", methods = ["POST", "GET"])                   
 def display():
     return render_template("main.html")
@@ -57,8 +61,51 @@ def code():
 def reg():
     if request.method == "GET":
         return render_template("register.html")
-    elif request.methid == "POST":
+    elif request.method == "POST":
+        print("\n\n\n")
+        print("***DIAG: this Flask obj ***")
+        print(app)
+        print("***DIAG: request obj ***")
+        print(request)
+        print("***DIAG: request.args ***")
+        print(request.form)
+        print("***DIAG: request.args['username']  ***")
+        print(request.form['register_username'])
+        print("***DIAG: request.headers ***")
+        if add_to_db(request.form['register_username'],request.form['register_pswd']):
+            return render_template('home.html')
+        else:
+            return render_template('register.html',message="Username already exists")
+    return Response(status=405)
+
+@app.route("/login", methods = ["POST","GET"])
+def login():
+    if request.method == "GET":
+        return render_template('login.html')
+    elif request.method == "POST":
+        print("\n\n\n")
+        print("***DIAG: this Flask obj ***")
+        print(app)
+        print("***DIAG: request obj ***")
+        print(request)
+        print("***DIAG: request.args ***")
+        print(request.form)  # displays entered info as dict
+        print("***DIAG: request.args['username']  ***")
+        print(request.form['user_name'])
+        print("***DIAG: request.headers ***")
+        username = request.form['user_name']
+        passwd = request.form['pass_word']
+        if(in_table(username)):
+            if correct_passwd(username,passwd):
+                session[username] = username
+                return render_template("home.html")
+            else:
+                return render_template("login.html",message="Password is incorrect")
+        else:
+            return render_template("login.html",message="Username not found")
         
+
+
 
 if __name__ == "__main__": 
     app.debug = True                                                                                                        

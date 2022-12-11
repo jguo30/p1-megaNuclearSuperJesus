@@ -13,17 +13,19 @@
       Enter your username and password below to proceed.
     </h3>
 
-    <form action="/home" method="POST">
+    <form action="/login" method="POST">
       <input type="text" name="user_name">
       <input type="password" name="pass_word">
       <input type="submit" name="submit_log">
     </form>
-
+    {% if message %}
+      {{message}}
+    {% endif %}
     <br>
 
     <h4>Don't have an account? Sign up now!</h4>
 
-    <form action="/register" method="POST">
+    <form action="/register" method="GET">
       <button type="submit">Register</button>
     </form>
 
