@@ -14,6 +14,7 @@ def display():
 
 @app.route("/results", methods = ["POST", "GET"])
 def results():
+    #Bing maps stuff
     lat = float(request.form["Lat"])
     lon = float(request.form["Long"])
     dist = 50
@@ -32,7 +33,7 @@ def results():
         #print(i)
         results.append(i["DisplayName"])
         #print(i["DisplayName"])
-
+    #weather stuff
     weatherUrl = f'https://archive-api.open-meteo.com/v1/era5?latitude={lat}&longitude={lon}&start_date=2021-01-01&end_date=2021-12-31&daily=temperature_2m_max,temperature_2m_min&timezone=America%2FNew_York&temperature_unit=fahrenheit&windspeed_unit=mph'
     r = requests.get(weatherUrl)
     data = r.json()
