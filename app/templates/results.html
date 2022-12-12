@@ -9,6 +9,18 @@
     {% for i in poi %}
     <h4>{{i}}</h4>
     {% endfor %}
-    </body>
+    <table>
+      <tr>
+        <th>Month</th>
+        <th>°F</th>
+      </tr>
+      {% for i in range(12)%}
+      <tr>
+      <td>{{mons[i]}}</td>
+      <td>{{weath[i]}}</td>
+      </tr>
+      {% endfor %}
+    </table>
+  </body>
 
 </html>
