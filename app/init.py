@@ -14,11 +14,22 @@ def display():
 
 @app.route("/results", methods = ["POST", "GET"])
 def results():
+
+    collegeBase = "https://api.data.gov/ed/collegescorecard/v1/schools.json?"
+    schoolAddon = collegeBase + "school.name="
+    schoolAddon += request.form["College"]
+    schoolAddon += "&school.main_campus=1"
+    fields0 = "&fields=school.name,location.lat,location.lon,2020.student.size"
+    apiKey = "&api_key=U5nqzYuypTfafBJkGiHwhNU10dXdtO36S8isJeUi"
+    finalURL = schoolAddon + fields0+apiKey
+    r = requests.get(finalURL)
+    data = r.json()
     #Bing maps stuff
-    lat = float(request.form["Lat"])
-    lon = float(request.form["Long"])
+    lat = float(data["results"][0]["location.lat"])
+    lon = float(data["results"][0]["location.lon"])
     dist = 50
-    code = int(request.form["Code"])
+    code = 7997
+    #code = int(request.form["Code"])
     num = 5
 
     url = f'http://spatial.virtualearth.net/REST/v1/data/Microsoft/PointsOfInterest?spatialFilter=nearby({lat},{lon},{dist})&$filter=EntityTypeID%20eq%20%27{code}%27&$select=EntityID,DisplayName,Latitude,Longitude,__Distance&$top={num}&$format=json&key=Aq5RfNwj-YFePBBwOI4Dz18rk5AcP_hJ9BcR8g91kQUZNzWY_eNYJT3f79zkfHU0'
@@ -107,8 +118,10 @@ def login():
         else:
             return render_template("login.html",message="Username not found")
         
+@app.route("/home", methods = ["POST","GET"])
+def home():
 
-
+    return render_template('home.html')
 
 if __name__ == "__main__": 
     app.debug = True                                                                                                        
