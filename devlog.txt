@@ -47,7 +47,7 @@ FDBK: Missing component map.
 - Updated launch codes/README.md and requirements.txt
 --------------------------------------------------------------
 
-samc -- 2022-12-08
+samC -- 2022-12-08
 --------------------------------------------------------------
 - Updating and improving on the python drivers
 - Able to display one of the APIs on the site
@@ -62,6 +62,21 @@ College Scorecard
 nicoleZ -- 2022-12-12 05:40
 --------------------------------------------------------------
 - Working tabs in home.html (with home.css and home.js)
+- More frontend things and FEF
+--------------------------------------------------------------
+
+marcJ, jacobG -- 2022-12-12 12:50
+--------------------------------------------------------------
+- Working with register.html and Flask
+- Adding features like retype password
+- FIguring out db bugs
+--------------------------------------------------------------
+
+samC -- 2022-12-12 12:50
+--------------------------------------------------------------
+- Making website more efficient/ faster loading speeds
+- Added weather API calls to the website
+- Figuring out bugs with POI codes and returned POI
 --------------------------------------------------------------
 
 ==============================================================

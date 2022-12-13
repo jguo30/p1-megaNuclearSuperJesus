@@ -14,14 +14,28 @@ def display():
 
 @app.route("/results", methods = ["POST", "GET"])
 def results():
+
+    collegeBase = "https://api.data.gov/ed/collegescorecard/v1/schools.json?"
+    schoolAddon = collegeBase + "school.name="
+    schoolAddon += request.form["College"]
+    schoolAddon += "&school.main_campus=1"
+    fields0 = "&fields=school.name,location.lat,location.lon,2020.student.size"
+    apiKey = "&api_key=U5nqzYuypTfafBJkGiHwhNU10dXdtO36S8isJeUi"
+    finalURL = schoolAddon + fields0+apiKey
+    print(finalURL)
+    r = requests.get(finalURL)
+    data = r.json()
     #Bing maps stuff
-    lat = float(request.form["Lat"])
-    lon = float(request.form["Long"])
+    lat = float(data["results"][0]["location.lat"])
+    lon = float(data["results"][0]["location.lon"])
     dist = 50
-    code = int(request.form["Code"])
+    code = 7997
+    #code = int(request.form["Code"])
     num = 5
 
-    url = f'http://spatial.virtualearth.net/REST/v1/data/Microsoft/PointsOfInterest?spatialFilter=nearby({lat},{lon},{dist})&$filter=EntityTypeID%20eq%20%27{code}%27&$select=EntityID,DisplayName,Latitude,Longitude,__Distance&$top={num}&$format=json&key=Aq5RfNwj-YFePBBwOI4Dz18rk5AcP_hJ9BcR8g91kQUZNzWY_eNYJT3f79zkfHU0'
+    url = f'http://dev.virtualearth.net/REST/v1/Routes/LocalInsights?waypoint={lat},{lon}&maxTime=60&timeUnit=minute&type=SeeDo&key=Aq5RfNwj-YFePBBwOI4Dz18rk5AcP_hJ9BcR8g91kQUZNzWY_eNYJT3f79zkfHU0'
+    #url = f'http://spatial.virtualearth.net/REST/v1/data/Microsoft/PointsOfInterest?spatialFilter=nearby({lat},{lon},{dist})&$filter=EntityTypeID%20eq%20%27{code}%27&$select=EntityID,DisplayName,Latitude,Longitude,__Distance&$top={num}&$format=json&key=Aq5RfNwj-YFePBBwOI4Dz18rk5AcP_hJ9BcR8g91kQUZNzWY_eNYJT3f79zkfHU0'
+
     print(url)
     r = requests.get(url)
     print("Bing maps printing...")
@@ -29,9 +43,10 @@ def results():
     data = r.json()
     results = []
     print("_____________________________")
-    for i in data["d"]["results"]:
+    #for i in data["d"]["results"]:
+    for i in data["resourceSets"][0]["resources"][0]["categoryTypeResults"][0]["entities"]:
         #print(i)
-        results.append(i["DisplayName"])
+        results.append(i["entityName"])
         #print(i["DisplayName"])
     #weather stuff
     weatherUrl = f'https://archive-api.open-meteo.com/v1/era5?latitude={lat}&longitude={lon}&start_date=2021-01-01&end_date=2021-12-31&daily=temperature_2m_max,temperature_2m_min&timezone=America%2FNew_York&temperature_unit=fahrenheit&windspeed_unit=mph'
@@ -110,8 +125,10 @@ def login():
         else:
             return render_template("login.html",message="Username not found")
         
+@app.route("/home", methods = ["POST","GET"])
+def home():
 
-
+    return render_template('home.html')
 
 if __name__ == "__main__": 
     app.debug = True                                                                                                        
