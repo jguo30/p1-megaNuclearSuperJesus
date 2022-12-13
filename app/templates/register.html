@@ -11,7 +11,10 @@
     <h3>To register, enter your desired username and password.</h3>
     <form action="/register" method="POST">
       <input type="text" name="register_username">
-      <input type="password" name="register_pswd">
+      <input type="text" name="register_pswd">
+      <br><br>
+      Confirm Password
+      <input type="text" name="pswd_confirm">
       <input type="submit" name="register_submit">
     </form>
     {% if message %}

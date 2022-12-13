@@ -30,6 +30,12 @@ def add_to_db(username,password):
     db.commit() 
     return True
 
+def pw_confirm(pw,pw_confirm):
+    if pw == pw_confirm:
+        return True
+    else:
+        return False
+
 def get_pass(username):
     if in_table(username):
         user_list = list(c.execute("SELECT * FROM usernames").fetchall())

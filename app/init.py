@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, Response, session
-from db import add_to_db, in_table, correct_passwd
+from db import add_to_db, in_table, correct_passwd, pw_confirm
 import requests
 import calendar
 code = 7997
@@ -75,10 +75,13 @@ def reg():
         print("***DIAG: request.args['username']  ***")
         print(request.form['register_username'])
         print("***DIAG: request.headers ***")
-        if add_to_db(request.form['register_username'],request.form['register_pswd']):
-            return render_template('home.html')
+        if(pw_confirm(request.form['register_pswd'],request.form['pswd_confirm'])):
+            if add_to_db(request.form['register_username'],request.form['register_pswd']):
+                return render_template('home.html')
+            else:
+                return render_template('register.html',message="Username already exists")
         else:
-            return render_template('register.html',message="Username already exists")
+            return render_template('register.html',message="Passwords do not match")
     return Response(status=405)
 
 @app.route("/login", methods = ["POST","GET"])
