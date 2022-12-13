@@ -1,0 +1,12 @@
+Search Dropdown:
+Mosty likely a dropdown menu, you can type to filter options. Selecting one will search it
+Favorites page/db:
+saves a user's favorite colleges
+API functionality:
+snow data
+college data
+route data (by multiple mode of transport)
+Make POI decision
+More?
+
+
