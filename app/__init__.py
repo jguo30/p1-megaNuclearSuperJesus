@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, Response, session
 from db import add_to_db, in_table, correct_passwd
 import requests
 import calendar
+import random
 code = 7997
 app = app = Flask(__name__)      
 app.secret_key = "6gBvzKwE8RWOt6amHzNz"
@@ -14,7 +15,6 @@ def display():
 
 @app.route("/results", methods = ["POST", "GET"])
 def results():
-
     collegeBase = "https://api.data.gov/ed/collegescorecard/v1/schools.json?"
     schoolAddon = collegeBase + "school.name="
     schoolAddon += request.form["College"]
@@ -33,7 +33,7 @@ def results():
     #code = int(request.form["Code"])
     num = 5
 
-    url = f'http://dev.virtualearth.net/REST/v1/Routes/LocalInsights?waypoint={lat},{lon}&maxTime=60&timeUnit=minute&type=SeeDo&key=Aq5RfNwj-YFePBBwOI4Dz18rk5AcP_hJ9BcR8g91kQUZNzWY_eNYJT3f79zkfHU0'
+    url = f'http://dev.virtualearth.net/REST/v1/Routes/LocalInsights?waypoint={lat},{lon}&maxTime=60&timeUnit=minute&type=Restaurants,Museums,Attractions,Parks,AmusementParks&key=Aq5RfNwj-YFePBBwOI4Dz18rk5AcP_hJ9BcR8g91kQUZNzWY_eNYJT3f79zkfHU0'
     #url = f'http://spatial.virtualearth.net/REST/v1/data/Microsoft/PointsOfInterest?spatialFilter=nearby({lat},{lon},{dist})&$filter=EntityTypeID%20eq%20%27{code}%27&$select=EntityID,DisplayName,Latitude,Longitude,__Distance&$top={num}&$format=json&key=Aq5RfNwj-YFePBBwOI4Dz18rk5AcP_hJ9BcR8g91kQUZNzWY_eNYJT3f79zkfHU0'
 
     print(url)
@@ -44,10 +44,15 @@ def results():
     results = []
     print("_____________________________")
     #for i in data["d"]["results"]:
-    for i in data["resourceSets"][0]["resources"][0]["categoryTypeResults"][0]["entities"]:
+    for i in data["resourceSets"][0]["resources"][0]["categoryTypeResults"]:#[0]["entities"]:
+        count = 0
         #print(i)
-        results.append(i["entityName"])
-        #print(i["DisplayName"])
+        if i["entities"] != []:
+            for j in i["entities"]:
+                count += 1
+            rand = random.randint(0,count)
+            results.append(i["entities"][rand]["entityName"])
+            #print(i["DisplayName"])
     #weather stuff
     weatherUrl = f'https://archive-api.open-meteo.com/v1/era5?latitude={lat}&longitude={lon}&start_date=2021-01-01&end_date=2021-12-31&daily=temperature_2m_max,temperature_2m_min&timezone=America%2FNew_York&temperature_unit=fahrenheit&windspeed_unit=mph'
     r = requests.get(weatherUrl)
