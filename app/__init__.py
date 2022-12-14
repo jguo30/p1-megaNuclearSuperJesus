@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, Response, session
+from flask import Flask, render_template, request, Response, session, redirect
 from db import add_to_db, in_table, correct_passwd, pw_confirm
 import requests
 import calendar
@@ -119,7 +119,7 @@ def login():
         if(in_table(username)):
             if correct_passwd(username,passwd):
                 session[username] = username
-                return render_template("home.html")
+                return redirect("/home")
             else:
                 return render_template("login.html",message="Password is incorrect")
         else:
