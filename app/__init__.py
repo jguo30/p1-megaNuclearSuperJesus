@@ -3,6 +3,7 @@ from db import add_to_db, in_table, correct_passwd, pw_confirm
 import requests
 import calendar
 import random
+import os
 code = 7997
 app = app = Flask(__name__)      
 app.secret_key = "6gBvzKwE8RWOt6amHzNz"
@@ -15,13 +16,23 @@ def display():
 
 @app.route("/results", methods = ["POST", "GET"])
 def results():
+    wd = os.path.dirname(os.path.realpath(__file__))
+    file = open(wd + "/keys/key_bing.txt", "r")
+    bingKey = file.read()
+    print(bingKey)
+    file.close()
+    file = open(wd + "/keys/key_college.txt", "r")
+    collegeKey = file.read()
+    print(collegeKey)
+    file.close()
+
     collegeBase = "https://api.data.gov/ed/collegescorecard/v1/schools.json?"
     schoolAddon = collegeBase + "school.name="
     schoolAddon += request.form["College"]
     schoolAddon += "&school.main_campus=1"
     fields0 = "&fields=school.name,location.lat,location.lon,2020.student.size"
-    apiKey = "&api_key=U5nqzYuypTfafBJkGiHwhNU10dXdtO36S8isJeUi"
-    finalURL = schoolAddon + fields0+apiKey
+    #apiKey = "&api_key=U5nqzYuypTfafBJkGiHwhNU10dXdtO36S8isJeUi"
+    finalURL = schoolAddon + fields0+ "&api_key=" + collegeKey
     print(finalURL)
     r = requests.get(finalURL)
     data = r.json()
@@ -33,7 +44,7 @@ def results():
     #code = int(request.form["Code"])
     num = 5
 
-    url = f'http://dev.virtualearth.net/REST/v1/Routes/LocalInsights?waypoint={lat},{lon}&maxTime=60&timeUnit=minute&type=Restaurants,Museums,Attractions,Parks,AmusementParks,Bookstores&key=Aq5RfNwj-YFePBBwOI4Dz18rk5AcP_hJ9BcR8g91kQUZNzWY_eNYJT3f79zkfHU0'
+    url = f'http://dev.virtualearth.net/REST/v1/Routes/LocalInsights?waypoint={lat},{lon}&maxTime=60&timeUnit=minute&type=Restaurants,Museums,Attractions,Parks,AmusementParks,Bookstores&key={bingKey}'
     #url = f'http://spatial.virtualearth.net/REST/v1/data/Microsoft/PointsOfInterest?spatialFilter=nearby({lat},{lon},{dist})&$filter=EntityTypeID%20eq%20%27{code}%27&$select=EntityID,DisplayName,Latitude,Longitude,__Distance&$top={num}&$format=json&key=Aq5RfNwj-YFePBBwOI4Dz18rk5AcP_hJ9BcR8g91kQUZNzWY_eNYJT3f79zkfHU0'
 
     print(url)
