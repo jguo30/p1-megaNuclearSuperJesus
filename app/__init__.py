@@ -33,7 +33,7 @@ def results():
     #code = int(request.form["Code"])
     num = 5
 
-    url = f'http://dev.virtualearth.net/REST/v1/Routes/LocalInsights?waypoint={lat},{lon}&maxTime=60&timeUnit=minute&type=Restaurants,Museums,Attractions,Parks,AmusementParks&key=Aq5RfNwj-YFePBBwOI4Dz18rk5AcP_hJ9BcR8g91kQUZNzWY_eNYJT3f79zkfHU0'
+    url = f'http://dev.virtualearth.net/REST/v1/Routes/LocalInsights?waypoint={lat},{lon}&maxTime=60&timeUnit=minute&type=Restaurants,Museums,Attractions,Parks,AmusementParks,Bookstores&key=Aq5RfNwj-YFePBBwOI4Dz18rk5AcP_hJ9BcR8g91kQUZNzWY_eNYJT3f79zkfHU0'
     #url = f'http://spatial.virtualearth.net/REST/v1/data/Microsoft/PointsOfInterest?spatialFilter=nearby({lat},{lon},{dist})&$filter=EntityTypeID%20eq%20%27{code}%27&$select=EntityID,DisplayName,Latitude,Longitude,__Distance&$top={num}&$format=json&key=Aq5RfNwj-YFePBBwOI4Dz18rk5AcP_hJ9BcR8g91kQUZNzWY_eNYJT3f79zkfHU0'
 
     print(url)
@@ -50,11 +50,12 @@ def results():
         if i["entities"] != []:
             for j in i["entities"]:
                 count += 1
-            rand = random.randint(0,count)
-            results.append(i["entities"][rand]["entityName"])
+            rand = random.randint(1,count)
+            print(rand)
+            results.append(i["entities"][rand-1]["entityName"])
             #print(i["DisplayName"])
     #weather stuff
-    weatherUrl = f'https://archive-api.open-meteo.com/v1/era5?latitude={lat}&longitude={lon}&start_date=2021-01-01&end_date=2021-12-31&daily=temperature_2m_max,temperature_2m_min&timezone=America%2FNew_York&temperature_unit=fahrenheit&windspeed_unit=mph'
+    weatherUrl = f'https://archive-api.open-meteo.com/v1/era5?latitude={lat}&longitude={lon}&start_date=2021-01-01&end_date=2021-12-31&daily=temperature_2m_max,temperature_2m_min,rain_sum,snowfall_sum&timezone=America%2FNew_York&temperature_unit=fahrenheit&windspeed_unit=mph&precipitation_unit=inch'
     r = requests.get(weatherUrl)
     data = r.json()
     weather_results = [[] for i in range(12)]
@@ -62,18 +63,43 @@ def results():
     for i in range(365):
         max = float(data["daily"]["temperature_2m_max"][i])
         min = float(data["daily"]["temperature_2m_min"][i])
+        rain = float(data["daily"]["rain_sum"][i])
+        snow = float(data["daily"]["snowfall_sum"][i])
         date = data["daily"]["time"][i]
         #print(date)
         mon = int(date[5:7])
         #print(mon)
         mid = (max + min) / 2
-        weather_results[mon-1].append(mid)
+        weather_results[mon-1].append((mid,rain,snow))
     #print(weather_results)
     for i in range(12):
-        average = sum(weather_results[i]) / len(weather_results[i])
-        months.append(round(average,1))
+        le = len(weather_results[i])
+        print(le)
+        average = 0
+        average2 = 0
+        average3 = 0
+        for j in range(le):
+            #print(weather_results[i])
+            #print(weather_results[i][j][0])
+            average += weather_results[i][j][0]
+            average2 += weather_results[i][j][1]
+            average3 += weather_results[i][j][2]
+        #average = sum(weather_results[i][0]) / le
+        #average2 = sum(weather_results[i][1])
+        #average3 = sum(weather_results[i][2])
+        average /= le
+        months.append((round(average,1),round(average2,1),round(average3,1)))
     print(months)
-    return render_template("results.html", poi = results, weath = months, mons = month_list)
+    #Route info
+    url = f'http://dev.virtualearth.net/REST/v1/Routes/Driving?wayPoint.1=40.7178,-74.0138&wayPoint.2={lat},{lon}&optimize=time&avoid=borderCrossing&routeAttributes=transitStops&timeType=departure&dateTime=08/24/2023%2009:42:00&distanceUnit=mi&key=Aq5RfNwj-YFePBBwOI4Dz18rk5AcP_hJ9BcR8g91kQUZNzWY_eNYJT3f79zkfHU0'
+    r = requests.get(url)
+    data = r.json()
+    #things = data["resourceSets"][0]["resources"]
+    dur = data["resourceSets"][0]["resources"][0]["travelDurationTraffic"]
+    dur /= 3600
+    dist = data["resourceSets"][0]["resources"][0]["travelDistance"]
+    tup = (round(dist,2), round(dur,2))
+    return render_template("results.html", poi = results, weath = months, mons = month_list, route = tup)
     
 @app.route("/code", methods = ["POST", "GET"])                   
 def code():

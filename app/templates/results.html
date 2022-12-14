@@ -13,14 +13,23 @@
       <tr>
         <th>Month</th>
         <th>°F</th>
+        <th>Rain</th>
+        <th>Snow</th>
       </tr>
       {% for i in range(12)%}
       <tr>
       <td>{{mons[i]}}</td>
-      <td>{{weath[i]}}</td>
+      <td>{{weath[i][0]}}</td>
+      <td>{{weath[i][1]}}</td>
+      <td>{{weath[i][2]}}</td>
       </tr>
       {% endfor %}
     </table>
+    <br>
+    <h4>Driving Information</h4>
+    <p>Distance: {{route[0]}} Miles</p>
+    <p>Duration: {{route[1]}} Hours of Driving</p>
+
   </body>
 
 </html>
