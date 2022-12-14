@@ -35,4 +35,4 @@ Scripts\activate.bat
 ```
 python3 __init__.py
 ```
-9. Open the link prompted in the terminal!
+9. Open the link prompted in the terminal with browser of choice!
