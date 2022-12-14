@@ -31,3 +31,8 @@
 (Windows Command Prompt)
 Scripts\activate.bat
 ```
+8. Type 
+```
+python3 __init__.py
+```
+9. Open the link prompted in the terminal!
