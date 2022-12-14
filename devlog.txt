@@ -74,9 +74,16 @@ marcJ, jacobG -- 2022-12-12 12:50
 
 samC -- 2022-12-12 12:50
 --------------------------------------------------------------
-- Making website more efficient/ faster loading speeds
+- Making website more efficient/ faster loading speeds (asked on QAF)
 - Added weather API calls to the website
 - Figuring out bugs with POI codes and returned POI
+- Low quality search bar to convert college name to lat/long for usage in other APIs
 --------------------------------------------------------------
 
+samC -- 2022-13-13 23:48
+--------------------------------------------------------------
+- Updated search to give randomized POIs within reasonable distance instead of closest POI
+- Added snow and rain to weather (May be cut in future due to variability year to year)
+- Added basic driving route info (to be added to w/ price, transit, etc)
+- Added API key loading/storage mechanism
 ==============================================================
