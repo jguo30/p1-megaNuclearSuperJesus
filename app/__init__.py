@@ -5,10 +5,12 @@ import calendar
 import random
 import os
 code = 7997
-app = app = Flask(__name__)      
+app = Flask(__name__)      
 app.secret_key = "6gBvzKwE8RWOt6amHzNz"
 
 month_list = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+js_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), './js/home.js')
+
 
 @app.route("/", methods = ["POST", "GET"])                   
 def display():
@@ -170,7 +172,7 @@ def login():
 @app.route("/home", methods = ["POST","GET"])
 def home():
 
-    return render_template('home.html')
+    return render_template('home.html',path = js_path)
 
 if __name__ == "__main__": 
     app.debug = True                                                                                                        
