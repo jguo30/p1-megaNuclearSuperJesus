@@ -5,12 +5,13 @@ import calendar
 import random
 import os
 code = 7997
-app = app = Flask(__name__)      
+#ASSETS_DIR = os.path.dirname(os.path.abspath(__file__))
+app = Flask(__name__)#, template_folder=ASSETS_DIR, static_folder=ASSETS_DIR)
 app.secret_key = "6gBvzKwE8RWOt6amHzNz"
 
 month_list = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
 
-@app.route("/", methods = ["POST", "GET"])                   
+@app.route("/", methods = ["POST", "GET"])
 def display():
     return render_template("main.html")
 
@@ -111,8 +112,8 @@ def results():
     dist = data["resourceSets"][0]["resources"][0]["travelDistance"]
     tup = (round(dist,2), round(dur,2))
     return render_template("results.html", poi = results, weath = months, mons = month_list, route = tup)
-    
-@app.route("/code", methods = ["POST", "GET"])                   
+
+@app.route("/code", methods = ["POST", "GET"])
 def code():
     code = int(request.form["Code"])
     return redirect("/")
@@ -166,13 +167,12 @@ def login():
                 return render_template("login.html",message="Password is incorrect")
         else:
             return render_template("login.html",message="Username not found")
-        
+
 @app.route("/home", methods = ["POST","GET"])
 def home():
-
     return render_template('home.html')
 
-if __name__ == "__main__": 
-    app.debug = True                                                                                                        
-    app.run()      
+if __name__ == "__main__":
+    app.debug = True
+    app.run()
 
