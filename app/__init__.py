@@ -12,7 +12,7 @@ month_list = ["January", "February", "March", "April", "May", "June", "July", "A
 js_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), './js/home.js')
 
 
-@app.route("/", methods = ["POST", "GET"])                   
+@app.route("/", methods = ["POST", "GET"])
 def display():
     return render_template("main.html")
 
@@ -113,8 +113,8 @@ def results():
     dist = data["resourceSets"][0]["resources"][0]["travelDistance"]
     tup = (round(dist,2), round(dur,2))
     return render_template("results.html", poi = results, weath = months, mons = month_list, route = tup)
-    
-@app.route("/code", methods = ["POST", "GET"])                   
+
+@app.route("/code", methods = ["POST", "GET"])
 def code():
     code = int(request.form["Code"])
     return redirect("/")
@@ -168,13 +168,12 @@ def login():
                 return render_template("login.html",message="Password is incorrect")
         else:
             return render_template("login.html",message="Username not found")
-        
+
 @app.route("/home", methods = ["POST","GET"])
 def home():
+    return render_template('home.html')
 
-    return render_template('home.html',path = js_path)
-
-if __name__ == "__main__": 
-    app.debug = True                                                                                                        
-    app.run()      
+if __name__ == "__main__":
+    app.debug = True
+    app.run()
 
