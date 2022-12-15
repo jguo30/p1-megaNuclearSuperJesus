@@ -113,7 +113,7 @@ def results():
     dur /= 3600
     dist = data["resourceSets"][0]["resources"][0]["travelDistance"]
     tup = (round(dist,2), round(dur,2))
-    return render_template("results.html", poi = results, weath = months, mons = month_list, route = tup)
+    return render_template("results.html", poi = results, weath = months, mons = month_list, route = tup, name = college_name)
 
 @app.route("/code", methods = ["POST", "GET"])
 def code():
