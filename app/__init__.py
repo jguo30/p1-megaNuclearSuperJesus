@@ -38,6 +38,7 @@ def results():
     print(finalURL)
     r = requests.get(finalURL)
     data = r.json()
+    college_name = data["results"][0]["school.name"]
     #Bing maps stuff
     lat = float(data["results"][0]["location.lat"])
     lon = float(data["results"][0]["location.lon"])
