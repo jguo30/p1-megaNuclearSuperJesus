@@ -3,7 +3,7 @@
 
   <head>
     <title>HOME</title>
-    <link rel="stylesheet" href="../static/home.css">
+    <link rel="stylesheet" href="../static/css/home.css">
   </head>
 
   <body>
@@ -28,9 +28,13 @@
       <input type="submit" class="code" value="select code">
     </form>
 
-    <script src="../js/home.js"></script>
+    <br>
 
-    <!-- <script src="{{ url_for('static', filename='home.js')}}")></script> !-->
+    <form action="/logout" method="post">
+      <button type="submit">Logout</button>
+    </form>
+
+    <script src="../static/js/home.js"></script>
 
   </body>
 

@@ -5,8 +5,7 @@ import calendar
 import random
 import os
 code = 7997
-#ASSETS_DIR = os.path.dirname(os.path.abspath(__file__))
-app = Flask(__name__)#, template_folder=ASSETS_DIR, static_folder=ASSETS_DIR)
+app = Flask(__name__)
 app.secret_key = "6gBvzKwE8RWOt6amHzNz"
 
 month_list = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
