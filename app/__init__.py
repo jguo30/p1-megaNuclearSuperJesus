@@ -46,8 +46,8 @@ def results():
     code = 7997
     #code = int(request.form["Code"])
     num = 5
-
-    url = f'http://dev.virtualearth.net/REST/v1/Routes/LocalInsights?waypoint={lat},{lon}&maxTime=60&timeUnit=minute&type=Restaurants,Museums,Attractions,Parks,AmusementParks,Bookstores&key={bingKey}'
+    
+    url = f'http://dev.virtualearth.net/REST/v1/Routes/LocalInsights?waypoint={lat},{lon}&maxTime=15&timeUnit=minute&type=Restaurants,Museums,Attractions,Parks,AmusementParks,Bookstores&key={bingKey}'
     #url = f'http://spatial.virtualearth.net/REST/v1/data/Microsoft/PointsOfInterest?spatialFilter=nearby({lat},{lon},{dist})&$filter=EntityTypeID%20eq%20%27{code}%27&$select=EntityID,DisplayName,Latitude,Longitude,__Distance&$top={num}&$format=json&key=Aq5RfNwj-YFePBBwOI4Dz18rk5AcP_hJ9BcR8g91kQUZNzWY_eNYJT3f79zkfHU0'
 
     print(url)
