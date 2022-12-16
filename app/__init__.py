@@ -5,7 +5,7 @@ import calendar
 import random
 import os
 code = 7997
-app = Flask(__name__)      
+app = Flask(__name__)
 app.secret_key = "6gBvzKwE8RWOt6amHzNz"
 
 month_list = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
@@ -38,6 +38,7 @@ def results():
     print(finalURL)
     r = requests.get(finalURL)
     data = r.json()
+    college_name = data["results"][0]["school.name"]
     #Bing maps stuff
     lat = float(data["results"][0]["location.lat"])
     lon = float(data["results"][0]["location.lon"])
@@ -112,7 +113,7 @@ def results():
     dur /= 3600
     dist = data["resourceSets"][0]["resources"][0]["travelDistance"]
     tup = (round(dist,2), round(dur,2))
-    return render_template("results.html", poi = results, weath = months, mons = month_list, route = tup)
+    return render_template("results.html", poi = results, weath = months, mons = month_list, route = tup, name = college_name)
 
 @app.route("/code", methods = ["POST", "GET"])
 def code():
