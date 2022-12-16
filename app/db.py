@@ -46,3 +46,20 @@ def get_pass(username):
 
 def correct_passwd(username,password):
     return get_pass(username) == password
+
+
+def has_likes(username):
+    user_list = list(c.execute("SELECT user FROM favorites").fetchall())
+    print(user_list)
+    for i in user_list:
+        for j in i:
+            if username == j:
+                return True
+    return False
+
+def add_liked(username,college):
+    if(has_likes(username)):
+        string = c.execute("SELECT favorites FROM favorites WHERE user=?",username)
+        new_string = string + ", " + college
+        c.execute("UPDATE favorites SET favorites=? WHERE user=?",new_string,username)
+        

@@ -173,6 +173,11 @@ def login():
 def home():
     return render_template('home.html')
 
+@app.route("/like",methods = ["POST","GET"])
+def like():
+    if request.method == "POST":
+        return
+
 if __name__ == "__main__":
     app.debug = True
     app.run()
