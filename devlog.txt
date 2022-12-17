@@ -80,10 +80,24 @@ samC -- 2022-12-12 12:50
 - Low quality search bar to convert college name to lat/long for usage in other APIs
 --------------------------------------------------------------
 
-samC -- 2022-13-13 23:48
+samC -- 2022-12-13 23:48
 --------------------------------------------------------------
 - Updated search to give randomized POIs within reasonable distance instead of closest POI
 - Added snow and rain to weather (May be cut in future due to variability year to year)
 - Added basic driving route info (to be added to w/ price, transit, etc)
 - Added API key loading/storage mechanism
+--------------------------------------------------------------
+
+jacobG -- 2022-12-14
+--------------------------------------------------------------
+- Making API cards and registering for gas price APIs
+- Most are not free so I have not found one yet
+--------------------------------------------------------------
+
+jacobG, samC -- 2022-12-16
+--------------------------------------------------------------
+- Fixing the error keys when requesting info too close to NYC
+- Figured out it was the time that made the API super slow and crash.
+- Worked on using distance from major cities when calculating for POI
+--------------------------------------------------------------
 ==============================================================
