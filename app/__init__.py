@@ -109,7 +109,7 @@ def results():
         months.append((round(average,1),round(average2,1),round(average3,1)))
     print(months)
     #Route info
-    url = f'http://dev.virtualearth.net/REST/v1/Routes/Driving?wayPoint.1=40.7178,-74.0138&wayPoint.2={lat},{lon}&optimize=time&avoid=borderCrossing&routeAttributes=transitStops&timeType=departure&dateTime=08/24/2023%2009:42:00&distanceUnit=mi&key=Aq5RfNwj-YFePBBwOI4Dz18rk5AcP_hJ9BcR8g91kQUZNzWY_eNYJT3f79zkfHU0'
+    url = f'http://dev.virtualearth.net/REST/v1/Routes/Driving?wayPoint.1=40.7178,-74.0138&wayPoint.2={lat},{lon}&optimize=time&avoid=borderCrossing&routeAttributes=transitStops&timeType=departure&dateTime=08/24/2023%2009:42:00&distanceUnit=mi&key={bingKey}'
     r = requests.get(url)
     data = r.json()
     #things = data["resourceSets"][0]["resources"]
