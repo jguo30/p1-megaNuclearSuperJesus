@@ -110,6 +110,7 @@ def results():
     print(months)
     #Route info
     url = f'http://dev.virtualearth.net/REST/v1/Routes/Driving?wayPoint.1=40.7178,-74.0138&wayPoint.2={lat},{lon}&optimize=time&avoid=borderCrossing&routeAttributes=transitStops&timeType=departure&dateTime=08/24/2023%2009:42:00&distanceUnit=mi&key={bingKey}'
+    print(url)
     r = requests.get(url)
     data = r.json()
     #things = data["resourceSets"][0]["resources"]
@@ -117,7 +118,8 @@ def results():
     dur /= 3600
     dist = data["resourceSets"][0]["resources"][0]["travelDistance"]
     tup = (round(dist,2), round(dur,2))
-    return render_template("results.html", poi = results, weath = months, mons = month_list, route = tup, name = college_name)
+    iUrl = f'https://dev.virtualearth.net/REST/v1/Imagery/Map/Aerialwithlabels/Routes/Driving?wayPoint.1=40.7178,-74.0138&waypoint.2={lat},{lon}&dateTime=08/24/2023%2009:42&maxSolutions=1&key={bingKey}'
+    return render_template("results.html", poi = results, weath = months, mons = month_list, route = tup, name = college_name, image = iUrl)
 
 @app.route("/code", methods = ["POST", "GET"])
 def code():
