@@ -50,7 +50,7 @@ def results():
         maxTime = 15
     else:
         maxTime = 60
-    
+
     url = f'http://dev.virtualearth.net/REST/v1/Routes/LocalInsights?waypoint={lat},{lon}&maxTime={maxTime}&timeUnit=minute&type=Restaurants,Museums,Attractions,Parks,AmusementParks,Bookstores&key={bingKey}'
     #url = f'http://spatial.virtualearth.net/REST/v1/data/Microsoft/PointsOfInterest?spatialFilter=nearby({lat},{lon},{dist})&$filter=EntityTypeID%20eq%20%27{code}%27&$select=EntityID,DisplayName,Latitude,Longitude,__Distance&$top={num}&$format=json&key=Aq5RfNwj-YFePBBwOI4Dz18rk5AcP_hJ9BcR8g91kQUZNzWY_eNYJT3f79zkfHU0'
 
@@ -178,7 +178,9 @@ def login():
 
 @app.route("/home", methods = ["POST","GET"])
 def home():
-    return render_template('home.html')
+    f = open("collegeList.txt", "r")
+    colleges = f.readlines()
+    return render_template('home.html', collection=colleges)
 
 @app.route("/like",methods = ["POST","GET"])
 def like():

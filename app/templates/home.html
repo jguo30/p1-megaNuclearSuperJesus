@@ -23,8 +23,14 @@
     <br>
     <br>
     <form action="/results" method="post">
-      <input type="text" name = "College" placeholder="College Name">
+      <input type="text" name="College" placeholder="College Name" id="userInput" onkeyup="searchFilter()">
       <br>
+      <ul id="collegeList">
+        {% for college in collection %}
+          <li>{{ college }}</li>
+          <br>
+        {% endfor %}
+      </ul>
       <input type="submit" class="code" value="select code">
     </form>
 
