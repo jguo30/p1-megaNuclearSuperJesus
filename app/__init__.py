@@ -317,6 +317,11 @@ def home():
 # def like():
 #     if request.method == "POST":
         
+@app.route("/logout", methods = ["POST"])
+def logout():
+    # remove the username from the session if it's there
+    session.pop('username', None)
+    return redirect("/login")
 
 if __name__ == "__main__":
     app.debug = True
