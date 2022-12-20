@@ -183,10 +183,10 @@ def home():
     colleges = f.readlines()
     return render_template('home.html', collection=colleges)
 
-@app.route("/like",methods = ["POST","GET"])
-def like():
-    if request.method == "POST":
-        return
+# @app.route("/like",methods = ["POST","GET"])
+# def like():
+#     if request.method == "POST":
+        
 
 if __name__ == "__main__":
     app.debug = True

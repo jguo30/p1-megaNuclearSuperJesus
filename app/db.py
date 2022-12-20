@@ -59,20 +59,23 @@ def has_likes(username):
 
 def add_liked(username,college):
     if(has_likes(username)):
-        string = c.execute("SELECT favorites FROM favorites WHERE user=?",username)
-        new_string = string + ", " + college
-        c.execute("UPDATE favorites SET favorites=? WHERE user=?",new_string,username)
+        string = str(list(c.execute("SELECT favorites FROM favorites WHERE user=?",(username,)).fetchall())[0])
+        print(string)
+        string = string[2:len(string)-3]
+        new_string = str(string) + ", " + college
+        c.execute("UPDATE favorites SET favorites=? WHERE user=?",(new_string,username))
         db.commit()
     else:
         c.execute("INSERT INTO favorites VALUES(?,?)",(username,college,))
+        db.commit()
     
     
 def likes(username):
     if(has_likes(username)):
-        string = c.execute("SELECT favorites FROM favorites WHERE user=?",(username,))
+        string = list(c.execute("SELECT favorites FROM favorites WHERE user=?",(username,)).fetchall())[0]
         return string
     return False
 
-print(has_likes("marc"))
-add_liked("marc","Harvard")
-print(likes("marc"))
+# print(has_likes("marc"))
+# add_liked("marc","harvard")
+# print(likes("marc"))

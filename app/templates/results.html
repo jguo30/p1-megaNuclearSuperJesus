@@ -2,6 +2,8 @@
 <html lang="en">
 
   <head>
+    <link rel ="stylesheet" type="text/css" href="../static/css/results.css">
+    <script src="../static/js/results.js"></script>
     <title>RESULTS</title>
   </head>
 
@@ -31,6 +33,14 @@
     <p>Distance: {{route[0]}} Miles</p>
     <p>Duration: {{route[1]}} Hours of Driving</p>
     <img src="{{image}}">
+
+    <form action="/like" method="POST">
+      <input type="hidden" name="college_name" value="{{name}}">
+      <button type=submit class="button button-like">
+        <i class="fa fa-heart"></i>
+        Like
+      </button>
+    </form>
   </body>
 
 </html>
