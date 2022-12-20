@@ -131,8 +131,7 @@ def results():
     gasAv = (float(price0) + float(price1)) / 2.0
     totalGas = round((float(dist) / 24.2) * gasAv,2)
     iUrl = f'https://dev.virtualearth.net/REST/v1/Imagery/Map/Aerialwithlabels/Routes/Driving?wayPoint.1=40.7178,-74.0138&waypoint.2={lat},{lon}&dateTime=08/24/2023%2009:42&maxSolutions=1&key={bingKey}'
-    return render_template("results.html", gas = totalGas, poi = results, weath = months, mons = month_list, route = tup, name = college_name, image = iUrl)
-
+    return render_template("results.html", la = lat, lo = lon, key = bingKey, gas = totalGas, poi = results, weath = months, mons = month_list, route = tup, name = college_name, image = iUrl)
 @app.route("/code", methods = ["POST", "GET"])
 def code():
     code = int(request.form["Code"])

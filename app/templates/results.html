@@ -35,6 +35,22 @@
     <p>Total price of gas: ${{gas}}</p>
     <img src="{{image}}">
 
+    <div id='printoutPanel'></div>
+        
+    <div id='myMap' style='width: 60vw; height: 60vh;'></div>
+    <script type='text/javascript'>
+        function loadMapScenario() {
+            var map = new Microsoft.Maps.Map(document.getElementById('myMap'), {
+                /* No need to set credentials if already passed in URL */
+                mapTypeId: Microsoft.Maps.MapTypeId.road,
+                zoom: 18,
+                center: new Microsoft.Maps.Location({{la}},{{lo}})
+            });
+            map.setView({ mapTypeId: Microsoft.Maps.MapTypeId.streetside });
+            
+        }
+    </script>
+
     <form action="/like" method="POST">
       <input type="hidden" name="college_name" value="{{name}}">
       <button type=submit class="button button-like">
