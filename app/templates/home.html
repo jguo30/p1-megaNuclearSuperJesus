@@ -22,7 +22,9 @@
         <ul id="collegeList">
           {% for college in collection %}
             <!-- <li><a href="#">{{ college }}</a></li> -->
-            <li><a href="#">{{ college }}</a></li>
+            <li>
+              <a href="/results/{{college}}">{{ college }}</a>
+            </li>
           {% endfor %}
         </ul>
         <script src="../static/js/home.js"></script>
