@@ -23,12 +23,15 @@
     </div>
     <br>
     <br>
-    <form action="/results" method="post">
+    <form action="/results" method="get">
       <input type="search" name="College" placeholder="College Name" id="myInput" onkeyup="myFunction()">
       <br>
       <ul id="collegeList">
         {% for college in collection %}
+        <form action="/results" method = "post"> 
           <li><a href="#">{{ college }}</a></li>
+        </form>
+          <!-- <li><a href="#">{{ college }}</a></li> -->
         {% endfor %}
       </ul>
       <script src="../static/js/home.js"></script>
