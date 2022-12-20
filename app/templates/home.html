@@ -23,7 +23,7 @@
     <br>
     <br>
     <form action="/results" method="post">
-      <input type="text" name="College" placeholder="College Name" id="userInput" onkeyup="searchFilter()">
+      <input type="search" name="College" placeholder="College Name" id="userInput" onkeyup="searchFilter()">
       <br>
       <ul id="collegeList">
         {% for college in collection %}

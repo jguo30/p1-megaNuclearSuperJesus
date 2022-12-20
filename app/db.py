@@ -62,4 +62,17 @@ def add_liked(username,college):
         string = c.execute("SELECT favorites FROM favorites WHERE user=?",username)
         new_string = string + ", " + college
         c.execute("UPDATE favorites SET favorites=? WHERE user=?",new_string,username)
-        
+        db.commit()
+    else:
+        c.execute("INSERT INTO favorites VALUES(?,?)",(username,college,))
+    
+    
+def likes(username):
+    if(has_likes(username)):
+        string = c.execute("SELECT favorites FROM favorites WHERE user=?",(username,))
+        return string
+    return False
+
+print(has_likes("marc"))
+add_liked("marc","Harvard")
+print(likes("marc"))

@@ -178,7 +178,8 @@ def login():
 
 @app.route("/home", methods = ["POST","GET"])
 def home():
-    f = open("collegeList.txt", "r")
+    wd = os.path.dirname(os.path.realpath(__file__))
+    f = open(wd +"/collegeList.txt", "r")
     colleges = f.readlines()
     return render_template('home.html', collection=colleges)
 
