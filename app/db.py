@@ -77,5 +77,9 @@ def likes(username):
     return False
 
 # print(has_likes("marc"))
+<<<<<<< HEAD
 # add_liked("marc","harvard")
+=======
+# add_liked("marc","Harvard")
+>>>>>>> 23390b489c8c83756a43e6a183d0af810822d3a6
 # print(likes("marc"))
