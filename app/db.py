@@ -73,6 +73,6 @@ def likes(username):
         return string
     return False
 
-print(has_likes("marc"))
-add_liked("marc","Harvard")
-print(likes("marc"))
+# print(has_likes("marc"))
+# add_liked("marc","Harvard")
+# print(likes("marc"))

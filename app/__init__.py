@@ -51,7 +51,7 @@ def results():
     else:
         maxTime = 60
 
-    url = f'http://dev.virtualearth.net/REST/v1/Routes/LocalInsights?waypoint={lat},{lon}&maxTime={maxTime}&timeUnit=minute&type=Restaurants,Museums,Attractions,Parks,AmusementParks,Bookstores&key={bingKey}'
+    url = f'http://dev.virtualearth.net/REST/v1/Routes/LocalInsights?waypoint={lat},{lon}&maxTime={maxTime}&timeUnit=minute&type=Restaurants,Museums,Attractions,Parks,Bookstores&key={bingKey}'
     #url = f'http://spatial.virtualearth.net/REST/v1/data/Microsoft/PointsOfInterest?spatialFilter=nearby({lat},{lon},{dist})&$filter=EntityTypeID%20eq%20%27{code}%27&$select=EntityID,DisplayName,Latitude,Longitude,__Distance&$top={num}&$format=json&key=Aq5RfNwj-YFePBBwOI4Dz18rk5AcP_hJ9BcR8g91kQUZNzWY_eNYJT3f79zkfHU0'
 
     print(url)
@@ -118,8 +118,20 @@ def results():
     dur /= 3600
     dist = data["resourceSets"][0]["resources"][0]["travelDistance"]
     tup = (round(dist,2), round(dur,2))
+    gas0 = f'https://www.gasbuddy.com/gaspricemap/county?lat=40.7178&lng=-74.0138&usa=true'
+    gas1 = f'https://www.gasbuddy.com/gaspricemap/county?lat={lat}&lng={lon}&usa=true'
+    r = requests.post(gas0)
+    data = r.json()
+    price0 = data[0]["Price"]
+    print(data[0]["Price"])
+    r = requests.post(gas1)
+    data = r.json()
+    price1 = data[0]["Price"]
+    print(data[0]["Price"])
+    gasAv = (float(price0) + float(price1)) / 2.0
+    totalGas = round((float(dist) / 24.2) * gasAv,2)
     iUrl = f'https://dev.virtualearth.net/REST/v1/Imagery/Map/Aerialwithlabels/Routes/Driving?wayPoint.1=40.7178,-74.0138&waypoint.2={lat},{lon}&dateTime=08/24/2023%2009:42&maxSolutions=1&key={bingKey}'
-    return render_template("results.html", poi = results, weath = months, mons = month_list, route = tup, name = college_name, image = iUrl)
+    return render_template("results.html", gas = totalGas, poi = results, weath = months, mons = month_list, route = tup, name = college_name, image = iUrl)
 
 @app.route("/code", methods = ["POST", "GET"])
 def code():
