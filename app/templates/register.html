@@ -3,6 +3,7 @@
 
   <head>
     <title>SIGNUP</title>
+    <link rel="stylesheet" href="../static/css/site.css">
   </head>
 
   <body>
@@ -15,7 +16,7 @@
       Password: <input type="text" name="register_pswd">
       <br>
       Confirm Password: <input type="text" name="pswd_confirm">
-      <input type="submit" name="register_submit">
+      <input type="submit" name="register_submit" id="register_button">
     </form>
     {% if message %}
       {{message}}

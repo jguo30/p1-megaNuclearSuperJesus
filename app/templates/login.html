@@ -3,6 +3,7 @@
 
   <head>
     <title>LOGIN</title>
+    <link rel="stylesheet" href="../static/css/site.css">
   </head>
 
   <body>
@@ -16,7 +17,7 @@
     <form action="/login" method="POST">
       User: <input type="text" name="user_name"><br>
       Password: <input type="text" name="pass_word"><br>
-      <input type="submit" name="submit_log">
+      <input type="submit" name="submit_log" id="login_button">
     </form>
     {% if message %}
       {{message}}
