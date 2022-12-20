@@ -3,6 +3,7 @@
 
   <head>
     <title>HOME</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="../static/css/home.css">
   </head>
 
@@ -23,14 +24,14 @@
     <br>
     <br>
     <form action="/results" method="post">
-      <input type="search" name="College" placeholder="College Name" id="userInput" onkeyup="searchFilter()">
+      <input type="search" name="College" placeholder="College Name" id="myInput" onkeyup="myFunction()">
       <br>
       <ul id="collegeList">
         {% for college in collection %}
-          <li>{{ college }}</li>
-          <br>
+          <li><a href="#">{{ college }}</a></li>
         {% endfor %}
       </ul>
+      <script src="../static/js/home.js"></script>
       <input type="submit" class="code" value="select code">
     </form>
 
@@ -39,8 +40,6 @@
     <form action="/logout" method="post">
       <button type="submit">Logout</button>
     </form>
-
-    <script src="../static/js/home.js"></script>
 
   </body>
 
