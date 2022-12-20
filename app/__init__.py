@@ -30,9 +30,9 @@ def results():
 
     collegeBase = "https://api.data.gov/ed/collegescorecard/v1/schools.json?"
     schoolAddon = collegeBase + "school.name="
-    schoolAddon += request.form["College"]
+    schoolAddon += request.args["College"]
     schoolAddon += "&school.main_campus=1"
-    fields0 = "&fields=school.name,location.lat,location.lon,2020.student.size"
+    fields0 = "&fields=school.name,location.lat,location.lon,2020.student.size,school.degree_urbanization,student.demographics.female_share"
     #apiKey = "&api_key=U5nqzYuypTfafBJkGiHwhNU10dXdtO36S8isJeUi"
     finalURL = schoolAddon + fields0+ "&api_key=" + collegeKey
     print(finalURL)
@@ -132,6 +132,7 @@ def results():
     totalGas = round((float(dist) / 24.2) * gasAv,2)
     iUrl = f'https://dev.virtualearth.net/REST/v1/Imagery/Map/Aerialwithlabels/Routes/Driving?wayPoint.1=40.7178,-74.0138&waypoint.2={lat},{lon}&dateTime=08/24/2023%2009:42&maxSolutions=1&key={bingKey}'
     return render_template("results.html", la = lat, lo = lon, key = bingKey, gas = totalGas, poi = results, weath = months, mons = month_list, route = tup, name = college_name, image = iUrl)
+
 @app.route("/code", methods = ["POST", "GET"])
 def code():
     code = int(request.form["Code"])
@@ -154,7 +155,7 @@ def reg():
         print("***DIAG: request.headers ***")
         if(pw_confirm(request.form['register_pswd'],request.form['pswd_confirm'])):
             if add_to_db(request.form['register_username'],request.form['register_pswd']):
-                return render_template('home.html')
+                return redirect("/home")
             else:
                 return render_template('register.html',message="Username already exists")
         else:
