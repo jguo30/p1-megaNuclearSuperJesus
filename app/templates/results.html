@@ -87,7 +87,6 @@
       <div id='myMap' style='width: 60vw; height: 60vh;'></div>
       <script type='text/javascript'>
         function loadMapScenario() {
-<<<<<<< HEAD
             var map = new Microsoft.Maps.Map(document.getElementById('myMap'), {
                 /* No need to set credentials if already passed in URL */
                 mapTypeId: Microsoft.Maps.MapTypeId.road,
@@ -112,20 +111,6 @@
     </form>
   </body>
 </html>
-=======
-          var map = new Microsoft.Maps.Map(document.getElementById('myMap'), {
-            /* No need to set credentials if already passed in URL */
-            mapTypeId: Microsoft.Maps.MapTypeId.road,
-            zoom: 18,
-            center: new Microsoft.Maps.Location({{ la }}, {{ lo }})
-                  });
-        map.setView({ mapTypeId: Microsoft.Maps.MapTypeId.streetside });
-              }
-      </script>
-      <script type='text/javascript' src='https://www.bing.com/api/maps/mapcontrol?key={{key}}&callback=loadMapScenario'
-        async defer></script>
-    </div>
-  </div>
   
   <h3>Transit Directions</h3>
   {% for i in instruct%}
@@ -145,4 +130,3 @@
 </body>
 
 </html>
->>>>>>> 19b1307b0c537c2b3fa640f07e6001c732591f86
