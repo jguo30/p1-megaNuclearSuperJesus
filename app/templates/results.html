@@ -17,6 +17,8 @@
 
 <body>
   <h1 style="text-align:center">{{name}}</h1>
+  <h3 style="text-align:center">{{cs}}</h3>
+  <h4 style="text-align:center"><a href="{{website}}">School Site</a></h4>
   <br>
   <div class="grid-container">
     <div class="grid-x grid-margin-x small-up-2 medium-up-3">
@@ -54,7 +56,6 @@
           <img src="{{image}}">
         </div>
       </div>
-
     </div>
   </div>
 
@@ -91,14 +92,22 @@
             mapTypeId: Microsoft.Maps.MapTypeId.road,
             zoom: 18,
             center: new Microsoft.Maps.Location({{ la }}, {{ lo }})
-                });
+                  });
         map.setView({ mapTypeId: Microsoft.Maps.MapTypeId.streetside });
-            }
+              }
       </script>
       <script type='text/javascript' src='https://www.bing.com/api/maps/mapcontrol?key={{key}}&callback=loadMapScenario'
         async defer></script>
     </div>
   </div>
+  
+  <h3>Transit Directions</h3>
+  {% for i in instruct%}
+  <p>{{i}}</p>
+  {% endfor %}
+  <h3>Where is your tuition going?</h3>
+  <p>Average Monthly Salary of Professor: ${{sal}}</p>
+  <p>Total yearly instruction expidenture per student: ${{expi}}</p>
 
   <form action="/like" method="POST">
     <input type="hidden" name="college_name" value="{{name}}">
@@ -106,6 +115,7 @@
       <i class="fa fa-heart"></i>
       Like
     </button>
+  </form>
 </body>
 
 </html>
