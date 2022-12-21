@@ -62,7 +62,7 @@ def add_liked(username,college):
         string = str(list(c.execute("SELECT favorites FROM favorites WHERE user=?",(username,)).fetchall())[0])
         print(string)
         string = string[2:len(string)-3]
-        new_string = str(string) + ", " + college
+        new_string = str(string) + "," + college
         c.execute("UPDATE favorites SET favorites=? WHERE user=?",(new_string,username))
         db.commit()
     else:
@@ -76,6 +76,33 @@ def likes(username):
         return string
     return False
 
+def check_college(username,college):
+    string = str(list(c.execute("SELECT favorites FROM favorites WHERE user=?",(username,)).fetchall())[0])
+    colleges = string.split(",")
+    for school in colleges:
+        for j in school:
+            if college == j:
+                return True
+    return False
+
+def remove_college(username,college):
+    string = str(list(c.execute("SELECT favorites FROM favorites WHERE user=?",(username,)).fetchall())[0])
+    colleges = string.split(",")
+    for school in colleges:
+        for j in school:
+            if college == j:
+                remove(j)
+
+
+def remove_all(username):
+    if(has_likes(username)):
+        c.execute("DELETE from favorites WHERE user=?",(username,))
+        db.commit()
+        return True
+    return False
+
 # print(has_likes("marc"))
-# add_liked("marc","harvard")
+# add_liked("marc","New York University")
+# print(remove_all("marc"))
 # print(likes("marc"))
+in_table("marc")
