@@ -313,12 +313,12 @@ def home():
     colleges = f.readlines()
     return render_template('home.html', collection=colleges)
 
-@app.route("/like",methods = ["POST","GET"])
-def like():
-    if request.method == "POST":
-        if not check_college("username",request.form["college_name"]):
-            add_liked('username',request.form["college_name"])
-        else:
+# @app.route("/like",methods = ["POST","GET"])
+# def like():
+#     if request.method == "POST":
+#         if not check_college("username",request.form["college_name"]):
+#             add_liked('username',request.form["college_name"])
+#         else:
 
 @app.route("/logout", methods = ["POST"])
 def logout():
