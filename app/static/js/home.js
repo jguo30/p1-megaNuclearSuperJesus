@@ -21,7 +21,9 @@ function openTab(evt, tabAction) {
 }
  */
 
-$(document).foundation();
+ $(document).ready(function() {
+   $(document).foundation();
+ })
 
 // For the Search Filter
 function searchFilter() {

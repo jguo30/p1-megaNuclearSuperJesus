@@ -5,44 +5,41 @@
     <title>HOME</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="../static/css/home.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/foundation-sites@6.5.1/dist/css/foundation.min.css" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.0.1/js/vendor/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/foundation-sites@6.5.1/dist/js/foundation.min.js" crossorigin="anonymous"></script>
   </head>
 
   <body>
 
-    <!-- <div class="row">
-      <div class="columns">
-        <ul class="tabs" data-tabs id="example-tabs">
-          <li class="tabs-title is-active"><a href="#panel1" aria-selected="true">Search</a></li>
-          <li class="tabs-title"><a href="#panel2">Favorites</a></li>
-        </ul>
+    <ul class="tabs" data-tabs id="home-tabs">
+      <li class="tabs-title is-active"><a href="#tab1">Search</a></li>
+      <li class="tabs-title"><a href="#tab2">Favorites</a></li>
+    </ul>
 
-        <div class="tabs-content" data-tabs-content="example-tabs">
-
-          <div class="tabs-panel is-active" id="panel1">
-            <h3>Search for any college</h3>
-            <form action="/results" method="GET">
-              <input type="search" name="College" placeholder="College Name" id="myInput" onkeyup="myFunction()">
-              <br>
-              <ul id="collegeList">
-                {% for college in collection %}
-                <li>
-                  <a href="/results/{{college}}">{{ college }}</a>
-                </li>
-                {% endfor %}
-              </ul>
-              <script src="../static/js/home.js"></script>
-              <input type="submit" class="code" value="select code">
-            </form>
-          </div>
-
-          <div class="tabs-panel" id="panel2">
-            <h3>View your favorite colleges</h3>
-          </div>
-        </div>
+    <div class="tabs-content" data-tabs-content="home-tabs">
+      <div class="tabs-panel is-active" id="tab1">
+        <h3>Search for any college</h3>
+        <form action="/results" method="GET">
+          <input type="search" name="College" placeholder="College Name" id="myInput" onkeyup="myFunction()">
+          <br>
+          <ul id="collegeList">
+            {% for college in collection %}
+            <li>
+              <a href="/results/{{college}}">{{ college }}</a>
+            </li>
+            {% endfor %}
+          </ul>
+          <script src="../static/js/home.js"></script>
+          <input type="submit" class="code" value="select code">
+        </form>
       </div>
-    </div> -->
+      <div class="tabs-panel" id="tab2">
+        <h3>View your favorite colleges</h3>
+      </div>
+    </div>
 
-    <div class="tab">
+    <!-- <div class="tab">
       <button class="tablinks" onclick="openTab(event, 'Search')">Search</button>
       <button class="tablinks" onclick="openTab(event, 'Favorites')">Favorites</button>
     </div>
@@ -68,10 +65,10 @@
       <h3>View your favorite colleges</h3>
     </div>
     <br>
-    <br>
+    <br> -->
 
     <!-- <li><a href="#">{{ college }}</a></li> from line 54-55-->
-  
+
     <br>
 
     <form action="/logout" method="post">
