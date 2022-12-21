@@ -24,11 +24,11 @@
           <input type="search" name="College" placeholder="College Name" id="myInput" onkeyup="myFunction()">
           <br>
           <ul id="collegeList">
-            {% for college in collection %}
+          {% for college in collection.keys() %}
             <li>
-              <a href="/results/{{college}}">{{ college }}</a>
+              <a href='/results/{{collection[college]}}'>{{ college }}</a>
             </li>
-            {% endfor %}
+          {% endfor %}
           </ul>
           <script src="../static/js/home.js"></script>
           <input type="submit" class="code" value="select code">
