@@ -319,8 +319,12 @@ def like():
         if not check_college("username",request.form["college_name"]):
             add_liked('username',request.form["college_name"])
         else:
-            
 
+@app.route("/logout", methods = ["POST"])
+def logout():
+    # remove the username from the session if it's there
+    session.pop('username', None)
+    return redirect("/login")
 
 if __name__ == "__main__":
     app.debug = True

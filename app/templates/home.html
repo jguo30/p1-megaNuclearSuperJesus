@@ -9,6 +9,39 @@
 
   <body>
 
+    <!-- <div class="row">
+      <div class="columns">
+        <ul class="tabs" data-tabs id="example-tabs">
+          <li class="tabs-title is-active"><a href="#panel1" aria-selected="true">Search</a></li>
+          <li class="tabs-title"><a href="#panel2">Favorites</a></li>
+        </ul>
+
+        <div class="tabs-content" data-tabs-content="example-tabs">
+
+          <div class="tabs-panel is-active" id="panel1">
+            <h3>Search for any college</h3>
+            <form action="/results" method="GET">
+              <input type="search" name="College" placeholder="College Name" id="myInput" onkeyup="myFunction()">
+              <br>
+              <ul id="collegeList">
+                {% for college in collection %}
+                <li>
+                  <a href="/results/{{college}}">{{ college }}</a>
+                </li>
+                {% endfor %}
+              </ul>
+              <script src="../static/js/home.js"></script>
+              <input type="submit" class="code" value="select code">
+            </form>
+          </div>
+
+          <div class="tabs-panel" id="panel2">
+            <h3>View your favorite colleges</h3>
+          </div>
+        </div>
+      </div>
+    </div> -->
+
     <div class="tab">
       <button class="tablinks" onclick="openTab(event, 'Search')">Search</button>
       <button class="tablinks" onclick="openTab(event, 'Favorites')">Favorites</button>
@@ -21,7 +54,6 @@
         <br>
         <ul id="collegeList">
           {% for college in collection %}
-            <!-- <li><a href="#">{{ college }}</a></li> -->
             <li>
               <a href="/results/{{college}}">{{ college }}</a>
             </li>
@@ -37,6 +69,8 @@
     </div>
     <br>
     <br>
+
+    <!-- <li><a href="#">{{ college }}</a></li> from line 54-55-->
   
     <br>
 

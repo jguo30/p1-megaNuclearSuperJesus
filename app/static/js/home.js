@@ -1,4 +1,4 @@
-// For the tabs
+/* // For the tabs
 function openTab(evt, tabAction) {
     // Declare variables
     var i, tabcontent, tablinks;
@@ -19,7 +19,9 @@ function openTab(evt, tabAction) {
     document.getElementById(tabAction).style.display = "block";
     evt.currentTarget.className += " active";
 }
+ */
 
+$(document).foundation();
 
 // For the Search Filter
 function searchFilter() {
