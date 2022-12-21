@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, Response, session, redirect
-from db import add_to_db, in_table, correct_passwd, pw_confirm
+from db import add_to_db, in_table, correct_passwd, pw_confirm, check_college, add_liked, remove_college, likes, has_likes
 import requests
 import calendar
 import random
@@ -248,7 +248,12 @@ def result(college):
     gasAv = (float(price0) + float(price1)) / 2.0
     totalGas = round((float(dist) / 24.2) * gasAv,2)
     iUrl = f'https://dev.virtualearth.net/REST/v1/Imagery/Map/Aerialwithlabels/Routes/Driving?wayPoint.1=40.7178,-74.0138&waypoint.2={lat},{lon}&dateTime=08/24/2023%2009:42&maxSolutions=1&key={bingKey}'
-    return render_template("results.html", la = lat, lo = lon, key = bingKey, gas = totalGas, poi = results, weath = months, mons = month_list, route = tup, name = college_name, image = iUrl)
+    isLiked = check_college(session.get('username'),college)
+    if isLiked:
+            x = 1
+    else:
+            x = 0
+    return render_template("results.html", la = lat, lo = lon, key = bingKey, gas = totalGas, poi = results, weath = months, mons = month_list, route = tup, name = college_name, image = iUrl,code=x)
 
 
 @app.route("/code", methods = ["POST", "GET"])
@@ -299,7 +304,7 @@ def login():
         passwd = request.form['pass_word']
         if(in_table(username)):
             if correct_passwd(username,passwd):
-                session[username] = username
+                session["username"] = username
                 return redirect("/home")
             else:
                 return render_template("login.html",message="Password is incorrect")
@@ -311,14 +316,31 @@ def home():
     wd = os.path.dirname(os.path.realpath(__file__))
     f = open(wd +"/collegeList.txt", "r")
     colleges = f.readlines()
-    return render_template('home.html', collection=colleges)
+    like = []
+    like = likes(session.get('username'))
+    return render_template('home.html', collection=colleges,favorites=like)
 
 @app.route("/like",methods = ["POST","GET"])
 def like():
     if request.method == "POST":
-        if not check_college("username",request.form["college_name"]):
-            add_liked('username',request.form["college_name"])
+        user = session.get('username')
+        college = request.form["college_name"]
+        if not has_likes(user):
+            add_liked(user,college)
+        if not check_college(user,college):
+            add_liked(user,college)
         else:
+            remove_college(user,college)
+        print(likes(user))
+        isLiked = check_college(user,college)
+        if isLiked:
+            x = 1
+        else:
+            x = 0
+        return redirect(request.referrer,code = x)
+#result("college_name")
+        
+#render_template("results.html", la = request.form['la'], lo = request.form['lo'], key = request.form['key'], gas = request.form['gas'], poi = request.form['poi'], weath = request.form['weath'], mons = request.form['mons'], route = request.form['route'], name = request.form['name'], image = request.form['image'])
 
 @app.route("/logout", methods = ["POST"])
 def logout():

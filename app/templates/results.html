@@ -53,11 +53,14 @@
     <script type='text/javascript' src='https://www.bing.com/api/maps/mapcontrol?key={{key}}&callback=loadMapScenario' async defer></script> 
     <form action="/like" method="POST">
       <input type="hidden" name="college_name" value="{{name}}">
-      <button type=submit class="button button-like">
-        <i class="fa fa-heart"></i>
+      <input type="hidden" name="template" value="{{self}}">
+
+      <button type=submit id="like-button" class="button button-like 
+      {% if code == 1 -%}
+      liked
+      {% endif %}">
         Like
       </button>
     </form>
   </body>
-
 </html>
