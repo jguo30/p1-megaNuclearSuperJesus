@@ -9,8 +9,11 @@
 
   <body>
     <h1 style="text-align:center">{{name}}</h1>
+    <h3 style="text-align:center">{{cs}}</h1>
+    <h4 style = "text-align:center"><a href="{{website}}">School Site</a></h4>
     {% for i in poi %}
     <h4>{{i}}</h4>
+
     {% endfor %}
     <table>
       <tr>
@@ -29,14 +32,19 @@
       {% endfor %}
     </table>
     <br>
-    <h4>Driving Information</h4>
+    <h3>Driving Information</h3>
     <p>Distance: {{route[0]}} Miles</p>
     <p>Duration: {{route[1]}} Hours of Driving</p>
     <p>Total price of gas: ${{gas}}</p>
     <img src="{{image}}">
-
-    <div id='printoutPanel'></div>
-        
+    <h3>Transit Directions</h3>
+    {% for i in instruct%}
+    <p>{{i}}</p>
+    {% endfor %}
+    <h3>Where is your tuition going?</h3>
+    <p>Average Monthly Salary of Professor: ${{sal}}</p>
+    <p>Total yearly instruction expidenture per student: ${{expi}}</p>
+    <div id='printoutPanel'></div>    
     <div id='myMap' style='width: 60vw; height: 60vh;'></div>
     <script type='text/javascript'>
         function loadMapScenario() {
