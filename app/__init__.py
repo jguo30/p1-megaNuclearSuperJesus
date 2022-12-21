@@ -338,8 +338,14 @@ def login():
 @app.route("/home", methods = ["POST","GET"])
 def home():
     wd = os.path.dirname(os.path.realpath(__file__))
-    f = open(wd +"/collegeList.txt", "r")
-    colleges = f.readlines()
+    f = open(wd +"/collegeList.csv", "r")
+    nreader = csv.DictReader(f)
+    colleges = {}
+    for col in nreader:
+        colleges[col["College"]] = col["Code"]
+    #colleges = f.readlines()
+    for college in colleges.keys():
+        print(colleges[college])
     return render_template('home.html', collection=colleges)
 
 # @app.route("/like",methods = ["POST","GET"])
