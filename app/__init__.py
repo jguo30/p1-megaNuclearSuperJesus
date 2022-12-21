@@ -33,7 +33,7 @@ def results():
     schoolAddon = collegeBase + "school.name="
     schoolAddon += request.args["College"]
     schoolAddon += "&school.main_campus=1"
-    fields0 = "&fields=school.name,location.lat,location.lon,2020.student.size,school.degree_urbanization,student.demographics.female_share"
+    fields0 = "&fields=school.name,location.lat,location.lon,2020.student.size,2020.student.demographics.female_share,2020.student.demographics.first_generation,demographics.median_family_income,school.instructional_expenditure_per_fte,school.faculty_salary,school.city,school.state,school.school_url,root.ope8_id,root.fed_sch_cd"
     #apiKey = "&api_key=U5nqzYuypTfafBJkGiHwhNU10dXdtO36S8isJeUi"
     finalURL = schoolAddon + fields0+ "&api_key=" + collegeKey
     print(finalURL)
@@ -43,6 +43,7 @@ def results():
     #Bing maps stuff
     lat = float(data["results"][0]["location.lat"])
     lon = float(data["results"][0]["location.lon"])
+    #state = 
     dist = 50
     code = 7997
     #code = int(request.form["Code"])
@@ -133,6 +134,7 @@ def results():
     totalGas = round((float(dist) / 24.2) * gasAv,2)
     iUrl = f'https://dev.virtualearth.net/REST/v1/Imagery/Map/Aerialwithlabels/Routes/Driving?wayPoint.1=40.7178,-74.0138&waypoint.2={lat},{lon}&dateTime=08/24/2023%2009:42&maxSolutions=1&key={bingKey}'
     return render_template("results.html", la = lat, lo = lon, key = bingKey, gas = totalGas, poi = results, weath = months, mons = month_list, route = tup, name = college_name, image = iUrl)
+
 @app.route("/results/<college>", methods = ["POST", "GET"])
 def result(college):
     wd = os.path.dirname(os.path.realpath(__file__))
@@ -281,6 +283,7 @@ def result(college):
         instructions.append(f'Total duration of trip: {round(duration,2)} hours')
     return render_template("results.html", cs = city_state, website = school_site, sal = salary, expi = exp, instruct = instructions, la = lat, lo = lon, key = bingKey, gas = totalGas, poi = results, weath = months, mons = month_list, route = tup, name = college_name, image = iUrl)
 
+
 @app.route("/code", methods = ["POST", "GET"])
 def code():
     code = int(request.form["Code"])
@@ -352,10 +355,7 @@ def home():
 # @app.route("/like",methods = ["POST","GET"])
 # def like():
 #     if request.method == "POST":
-#         if not check_college("username",request.form["college_name"]):
-#             add_liked('username',request.form["college_name"])
-#         else:
-
+        
 @app.route("/logout", methods = ["POST"])
 def logout():
     # remove the username from the session if it's there
