@@ -132,7 +132,6 @@ def results():
     totalGas = round((float(dist) / 24.2) * gasAv,2)
     iUrl = f'https://dev.virtualearth.net/REST/v1/Imagery/Map/Aerialwithlabels/Routes/Driving?wayPoint.1=40.7178,-74.0138&waypoint.2={lat},{lon}&dateTime=08/24/2023%2009:42&maxSolutions=1&key={bingKey}'
     return render_template("results.html", la = lat, lo = lon, key = bingKey, gas = totalGas, poi = results, weath = months, mons = month_list, route = tup, name = college_name, image = iUrl)
-
 @app.route("/results/<college>", methods = ["POST", "GET"])
 def result(college):
     wd = os.path.dirname(os.path.realpath(__file__))
@@ -146,10 +145,10 @@ def result(college):
     file.close()
 
     collegeBase = "https://api.data.gov/ed/collegescorecard/v1/schools.json?"
-    schoolAddon = collegeBase + "school.name="
-    schoolAddon += college
+    schoolAddon = collegeBase + "ope8_id="
+    schoolAddon += "00" + str(college)
     schoolAddon += "&school.main_campus=1"
-    fields0 = "&fields=school.name,location.lat,location.lon,2020.student.size,school.degree_urbanization,student.demographics.female_share"
+    fields0 = "&fields=school.name,location.lat,location.lon,2020.student.size,school.instructional_expenditure_per_fte,school.faculty_salary,school.city,school.state,school.school_url,ope8_id,fed_sch_cd"
     #apiKey = "&api_key=U5nqzYuypTfafBJkGiHwhNU10dXdtO36S8isJeUi"
     finalURL = schoolAddon + fields0+ "&api_key=" + collegeKey
     print(finalURL)
@@ -159,6 +158,12 @@ def result(college):
     #Bing maps stuff
     lat = float(data["results"][0]["location.lat"])
     lon = float(data["results"][0]["location.lon"])
+    city = data["results"][0]["school.city"]
+    state = data["results"][0]["school.state"]
+    city_state = f'{city}, {state}'
+    school_site = data["results"][0]["school.school_url"]
+    salary = data["results"][0]["school.faculty_salary"]
+    exp = data["results"][0]["school.instructional_expenditure_per_fte"]
     dist = 50
     code = 7997
     #code = int(request.form["Code"])
@@ -248,8 +253,32 @@ def result(college):
     gasAv = (float(price0) + float(price1)) / 2.0
     totalGas = round((float(dist) / 24.2) * gasAv,2)
     iUrl = f'https://dev.virtualearth.net/REST/v1/Imagery/Map/Aerialwithlabels/Routes/Driving?wayPoint.1=40.7178,-74.0138&waypoint.2={lat},{lon}&dateTime=08/24/2023%2009:42&maxSolutions=1&key={bingKey}'
-    return render_template("results.html", la = lat, lo = lon, key = bingKey, gas = totalGas, poi = results, weath = months, mons = month_list, route = tup, name = college_name, image = iUrl)
-
+    transitUrl = f'http://dev.virtualearth.net/REST/V1/Routes/Transit?wp.0=40.7178,-74.0138&wp.1={lat},{lon}&timeType=Departure&distanceUnit=mi&dateTime=9:00:00AM&output=json&key={bingKey}'
+    print(transitUrl) 
+    r = requests.get(transitUrl)
+    data = r.json()
+    countTransit = 0
+    instructions = []
+    if "errorDetails" in data:
+        instructions.append(f"There is no viable way to transit to {college_name}")
+        duration = 0
+    else:
+        duration = float(data["resourceSets"][0]["resources"][0]["travelDuration"]) / 3600.
+        print(duration)
+        for i in data["resourceSets"][0]["resources"][0]["routeLegs"][0]["itineraryItems"]:
+            countTransit += 1
+            if i["details"][0]["maneuverType"] == "Walk":
+                print(f'{countTransit}. {i["instruction"]["text"]}')
+                instructions.append(f'{countTransit}. {i["instruction"]["text"]}')
+            else:
+                print(f'{countTransit}. Take the {i["instruction"]["text"]}:')
+                instructions.append(f'{countTransit}. Take the {i["instruction"]["text"]}:')
+                if "childItineraryItems" in i:
+                    for j in i["childItineraryItems"]:
+                        print(f'{j["instruction"]["text"]} (station)')
+                        instructions.append(f'- {j["instruction"]["text"]} (station)')
+        instructions.append(f'Total duration of trip: {round(duration,2)} hours')
+    return render_template("results.html", cs = city_state, website = school_site, sal = salary, expi = exp, instruct = instructions, la = lat, lo = lon, key = bingKey, gas = totalGas, poi = results, weath = months, mons = month_list, route = tup, name = college_name, image = iUrl)
 
 @app.route("/code", methods = ["POST", "GET"])
 def code():
