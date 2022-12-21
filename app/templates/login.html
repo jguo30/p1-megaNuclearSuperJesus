@@ -16,12 +16,14 @@
 
     <form action="/login" method="POST">
       User: <input type="text" name="user_name"><br>
-      Password: <input type="text" name="pass_word"><br>
+      Password: <input type="password" name="pass_word"><br>
       <input type="submit" name="submit_log" id="login_button">
     </form>
-    {% if message %}
-      {{message}}
-    {% endif %}
+    <h3>
+      {% if message %}
+        {{message}}
+      {% endif %}
+    </h3>
     <br>
 
     <h4>Don't have an account? Sign up now!</h4>
