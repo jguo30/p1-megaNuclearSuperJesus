@@ -280,8 +280,8 @@ def result(college):
                         print(f'{j["instruction"]["text"]} (station)')
                         instructions.append(f'- {j["instruction"]["text"]} (station)')
         instructions.append(f'Total duration of trip: {round(duration,2)} hours')
-    isLiked = check_college(session.get('username'),college)
-    if isLiked:
+        isLiked = check_college(session.get('username'),college)
+        if isLiked:
             x = 1
     else:
             x = 0
