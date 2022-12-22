@@ -34,8 +34,10 @@
 Scripts\activate.bat
 ```
 8. Install requirements with 
-9. `pip install =-r ../requirements.txt`
-10. Type 
+```
+pip install =-r ../requirements.txt
+```
+9. Type 
 ```
 python3 __init__.py
 ```
