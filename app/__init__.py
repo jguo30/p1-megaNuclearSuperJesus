@@ -385,10 +385,13 @@ def home():
     user = session.get("username")
     likes0 = ""
     likes0 = likes(user)
-    print(likes0)
-    likes0 = str(list(likes0))
-    likes0 = likes0[2:len(likes0)-2]
-    favorites = likes0.split(",")
+    if likes0 == False:
+        favorites = []
+    else:
+        print(likes0)
+        likes0 = str(list(likes0))
+        likes0 = likes0[2:len(likes0)-2]
+        favorites = likes0.split(",")
     return render_template('home.html', collection=colleges, favor = favorites)
 
 @app.route("/like",methods = ["POST","GET"])
