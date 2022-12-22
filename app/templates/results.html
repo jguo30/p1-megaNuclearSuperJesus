@@ -23,13 +23,13 @@
   <div class="grid-container">
     <div class="grid-x grid-margin-x small-up-2 medium-up-3">
       <div class="cell">
-        <div class="card" style="width: 250px;">
+        <div class="card" style="width: 350px;">
           <div class="card-divider">
             Points of Interest!
           </div>
           <div class="card-section">
-            {%for i in poi %}
-            <p>{{i}}</p>
+            {%for i in range(lsights) %}
+            <p><strong>{{sights[i]}}</strong><br>{{poi[i]}}</p>
             {% endfor %}
           </div>
         </div>
