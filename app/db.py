@@ -120,9 +120,9 @@ def remove_all(username):
     return False
 
 # print(has_likes("marc"))
-add_liked("marc","Cornell University")
+#add_liked("marc","Cornell University")
 # print(remove_all("marc"))
 #print(remove_college("marc","Harvard University"))
 #print(check_college("marc","Princeton University"))
-print(likes("marc"))
+#print(likes("marc"))
 # in_table("marc")
