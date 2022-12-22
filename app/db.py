@@ -1,4 +1,6 @@
 import sqlite3
+import os
+import csv
 
 DB_FILE = "user.db"
 
@@ -26,7 +28,7 @@ def add_to_db(username,password):
         return False
     else:
         c.execute("INSERT INTO usernames VALUES(?,?)",(username,password))
-        # c.execute(f'INSERT INTO usernames VALUES("{username}","{password}")')
+        #c.execute("INSERT INTO favorites VALUES(?,?)",(username,""))
     db.commit() 
     return True
 
@@ -51,25 +53,36 @@ def correct_passwd(username,password):
 def has_likes(username):
     user_list = list(c.execute("SELECT user FROM favorites").fetchall())
     print(user_list)
+    print("USERNAME IS",username)
     for i in user_list:
-        for j in i:
-            if username == j:
-                return True
+        #print(i[0])
+        if i[0] == username:
+            print("USER HAS A LIKE")
+            return True
     return False
 
 def add_liked(username,college):
+    wd = os.path.dirname(os.path.realpath(__file__))
+    f = open(wd +"/collegeList.csv", "r")
+    nreader = csv.DictReader(f)
+    colleges={}
+    for col in nreader:
+        colleges[col["Code"]] = col["College"]
+
     if(has_likes(username)):
         string = str(list(c.execute("SELECT favorites FROM favorites WHERE user=?",(username,)).fetchall())[0])
         print(string)
         string = string[2:len(string)-3]
         if(str(string) == ''):
-            new_string = college
+            new_string = colleges[college]
         else:
-            new_string = str(string) + "," + college
+            new_string = str(string) + "," + colleges[college]
         c.execute("UPDATE favorites SET favorites=? WHERE user=?",(new_string,username))
         db.commit()
     else:
-        c.execute("INSERT INTO favorites VALUES(?,?)",(username,college,))
+        print(username)
+        print(colleges[college])
+        c.execute("INSERT INTO favorites VALUES(?,?)",(username,colleges[college],))
         db.commit()
     
     
@@ -80,27 +93,41 @@ def likes(username):
     return False
 
 def check_college(username,college):
-    print(username + " is in session")
+    wd = os.path.dirname(os.path.realpath(__file__))
+    f = open(wd +"/collegeList.csv", "r")
+    nreader = csv.DictReader(f)
+    colleges={}
+    for col in nreader:
+        colleges[col["Code"]] = col["College"]
+
+    #print(username + " is in session")
     string = str(list(c.execute("SELECT favorites FROM favorites WHERE user=?",(username,)).fetchall())[0])
     string = string[2:len(string)-3]
-    colleges = string.split(",")
+    favorites = string.split(",")
     #print(colleges)
-    for school in colleges:
-        if school == college:
+    for school in favorites:
+        if school == colleges[college]:
             return True
     return False
 
 def remove_college(username,college):
+    wd = os.path.dirname(os.path.realpath(__file__))
+    f = open(wd +"/collegeList.csv", "r")
+    nreader = csv.DictReader(f)
+    colleges={}
+    for col in nreader:
+        colleges[col["Code"]] = col["College"]
+
     if(check_college(username,college)):
         string = str(list(c.execute("SELECT favorites FROM favorites WHERE user=?",(username,)).fetchall())[0])
         string = string[2:len(string)-3]
-        colleges = string.split(",")
+        favorites = string.split(",")
         print(colleges)
-        for school in colleges:
-            if school == college:
-                colleges.remove(school)
+        for school in favorites:
+            if school == colleges[college]:
+                favorites.remove(school)
         newString = ""
-        for s in colleges:
+        for s in favorites:
             newString+=s
             newString+= ","
         newString = newString[:len(newString)-1]
@@ -119,10 +146,10 @@ def remove_all(username):
         return True
     return False
 
-# print(has_likes("marc"))
-add_liked("marc","Cornell University")
+#print(has_likes("the"))
+#add_liked("the","271100")
 # print(remove_all("marc"))
 #print(remove_college("marc","Harvard University"))
 #print(check_college("marc","Princeton University"))
-print(likes("marc"))
+#print(likes("the"))
 # in_table("marc")

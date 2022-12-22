@@ -36,6 +36,13 @@
       </div>
       <div class="tabs-panel" id="tab2">
         <h3>View your favorite colleges</h3>
+        <ul id="collegeList">
+          {% for college in favor%}
+          <li>
+            <a href='/results/{{collection[college]}}'>{{ college }}</a>
+          </li>
+        {% endfor %}
+        </ul>
       </div>
     </div>
 

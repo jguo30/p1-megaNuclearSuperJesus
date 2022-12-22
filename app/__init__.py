@@ -133,6 +133,7 @@ def results():
     totalGas = round((float(dist) / 24.2) * gasAv,2)
     iUrl = f'https://dev.virtualearth.net/REST/v1/Imagery/Map/Aerialwithlabels/Routes/Driving?wayPoint.1=40.7178,-74.0138&waypoint.2={lat},{lon}&dateTime=08/24/2023%2009:42&maxSolutions=1&key={bingKey}'
     return render_template("results.html", la = lat, lo = lon, key = bingKey, gas = totalGas, poi = results, weath = months, mons = month_list, route = tup, name = college_name, image = iUrl)
+
 @app.route("/results/<college>", methods = ["POST", "GET"])
 def result(college):
     wd = os.path.dirname(os.path.realpath(__file__))
@@ -147,7 +148,10 @@ def result(college):
 
     collegeBase = "https://api.data.gov/ed/collegescorecard/v1/schools.json?"
     schoolAddon = collegeBase + "ope8_id="
-    schoolAddon += "00" + str(college)
+    if (len(str(college)) == 7):
+        schoolAddon += "0" + str(college)
+    else:
+        schoolAddon += "00" + str(college)
     schoolAddon += "&school.main_campus=1"
     fields0 = "&fields=school.name,location.lat,location.lon,2020.student.size,school.instructional_expenditure_per_fte,school.faculty_salary,school.city,school.state,school.school_url,ope8_id,fed_sch_cd"
     #apiKey = "&api_key=U5nqzYuypTfafBJkGiHwhNU10dXdtO36S8isJeUi"
@@ -166,6 +170,7 @@ def result(college):
     school_site = data["results"][0]["school.school_url"]
     salary = data["results"][0]["school.faculty_salary"]
     exp = data["results"][0]["school.instructional_expenditure_per_fte"]
+    id7 = data["results"][0]["ope8_id"]
     dist = 50
     code = 7997
     #code = int(request.form["Code"])
@@ -298,13 +303,17 @@ def result(college):
                         print(f'{j["instruction"]["text"]} (station)')
                         instructions.append(f'- {j["instruction"]["text"]} (station)')
         instructions.append(f'Total duration of trip: {round(duration,2)} hours')
-    # if has_likes(session.get('username')):
-    #     isLiked = check_college(session.get('username'),college)
-    #     if isLiked:
-    #         x = 1
-    # else:
-    #         x = 0
-    return render_template("results.html", lsights = len(insights),sights = insights, cs = city_state, website = "https://" + school_site, sal = salary, expi = exp, instruct = instructions, la = lat, lo = lon, key = bingKey, gas = totalGas, poi = results, weath = months, mons = month_list, route = tup, name = college_name, image = iUrl,code=0)
+    print("THE USER IN SESSION IS CALLED",session.get('username'))
+    if has_likes(session.get('username')):
+        isLiked = check_college(session.get('username'),college)
+        print(isLiked)
+        if isLiked:
+            like = True
+        else:
+            like = False
+    else:
+            like = False
+    return render_template("results.html", lsights = len(insights),sights = insights, cs = city_state, website = "https://" + school_site, sal = salary, expi = exp, instruct = instructions, la = lat, lo = lon, key = bingKey, gas = totalGas, poi = results, weath = months, mons = month_list, route = tup, name = college_name, image = iUrl,id = id7,Liked=like)
 
 @app.route("/code", methods = ["POST", "GET"])
 def code():
@@ -328,6 +337,7 @@ def reg():
         print("***DIAG: request.headers ***")
         if(pw_confirm(request.form['register_pswd'],request.form['pswd_confirm'])):
             if add_to_db(request.form['register_username'],request.form['register_pswd']):
+                session["username"] = request.form['register_username']
                 return redirect("/home")
             else:
                 return render_template('register.html',message="Username already exists")
@@ -370,28 +380,39 @@ def home():
     for col in nreader:
         colleges[col["College"]] = col["Code"]
     #colleges = f.readlines()
-    for college in colleges.keys():
-        print(colleges[college])
-    return render_template('home.html', collection=colleges)
+    # for college in colleges.keys():
+    #     print(colleges[college])
+    user = session.get("username")
+    likes0 = ""
+    likes0 = likes(user)
+    print(likes0)
+    likes0 = str(list(likes0))
+    likes0 = likes0[2:len(likes0)-2]
+    favorites = likes0.split(",")
+    return render_template('home.html', collection=colleges, favor = favorites)
 
 @app.route("/like",methods = ["POST","GET"])
 def like():
     if request.method == "POST":
         user = session.get('username')
-        college = request.form["college_name"]
-        if not has_likes(user):
-            add_liked(user,college)
-        if not check_college(user,college):
-            add_liked(user,college)
+        print(user,"IN SESSION")
+        college = request.form["id"]
+        if college[1] != '0':
+            college = college[1:]
         else:
+            college = college[2:]
+        print("trying to add",college)
+        if check_college(user,college):
             remove_college(user,college)
+        elif has_likes(user) == False:
+            print("college added from no likes")
+            add_liked(user,college)
+        elif not check_college(user,college):
+            print("college is added")
+            add_liked(user,college)
         print(likes(user))
-        isLiked = check_college(user,college)
-        if isLiked:
-            x = 1
-        else:
-            x = 0
-        return redirect(request.referrer,code = x)
+
+        return redirect(f"/results/{college}")
 
 @app.route("/logout", methods = ["POST"])
 def logout():
