@@ -9,7 +9,9 @@
 
 ### API KB Links
 - [College Scorecard](https://github.com/stuy-softdev/notes-and-code/blob/main/api_kb/411_on_CollegeScorecard.md)
-- placeholder
+- [Bing Maps](https://github.com/stuy-softdev/notes-and-code/blob/main/api_kb/411_on_BingMaps.md)
+- [Gas Buddy](https://github.com/stuy-softdev/notes-and-code/blob/main/api_kb/411_on_GasBuddyAPI.md)
+- [Open-Meteo Historical Weather](https://github.com/stuy-softdev/notes-and-code/blob/main/api_kb/411_on_openMeteoWeather.md)
 
 ### Launch Codes
 1. Navigate in your terminal to the directory in which you would like to store the College Picker using 
