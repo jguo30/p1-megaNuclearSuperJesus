@@ -405,7 +405,7 @@ def like():
         else:
             college = college[2:]
         print("trying to add",college)
-        if check_college(user,college):
+        if has_likes(user) and check_college(user,college):
             remove_college(user,college)
         elif has_likes(user) == False:
             print("college added from no likes")
