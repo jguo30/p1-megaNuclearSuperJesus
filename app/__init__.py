@@ -136,6 +136,8 @@ def results():
 
 @app.route("/results/<college>", methods = ["POST", "GET"])
 def result(college):
+    if "username" not in session:
+        return redirect("/login")
     wd = os.path.dirname(os.path.realpath(__file__))
     file = open(wd + "/keys/key_bing.txt", "r")
     bingKey = file.read()
@@ -313,7 +315,9 @@ def result(college):
             like = False
     else:
             like = False
-    return render_template("results.html", lsights = len(insights),sights = insights, cs = city_state, website = "https://" + school_site, sal = salary, expi = exp, instruct = instructions, la = lat, lo = lon, key = bingKey, gas = totalGas, poi = results, weath = months, mons = month_list, route = tup, name = college_name, image = iUrl,id = id7,Liked=like)
+    if school_site[0] != 'h':
+        school_site = "https://" + school_site
+    return render_template("results.html", lsights = len(insights),sights = insights, cs = city_state, website = school_site, sal = salary, expi = exp, instruct = instructions, la = lat, lo = lon, key = bingKey, gas = totalGas, poi = results, weath = months, mons = month_list, route = tup, name = college_name, image = iUrl,id = id7,Liked=like)
 
 @app.route("/code", methods = ["POST", "GET"])
 def code():
@@ -382,7 +386,10 @@ def home():
     #colleges = f.readlines()
     # for college in colleges.keys():
     #     print(colleges[college])
-    user = session.get("username")
+    if "username" in session:
+        user = session.get("username")
+    else:
+        return redirect("/login")
     likes0 = ""
     likes0 = likes(user)
     if likes0 == False:
