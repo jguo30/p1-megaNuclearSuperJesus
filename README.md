@@ -33,8 +33,10 @@
 (Windows Command Prompt)
 Scripts\activate.bat
 ```
-8. Type 
+8. Install requirements with 
+9. `pip install =-r ../requirements.txt`
+10. Type 
 ```
 python3 __init__.py
 ```
-9. Open the link prompted in the terminal with browser of choice!
+10. Open the link prompted in the terminal with browser of choice!
