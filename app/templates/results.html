@@ -23,13 +23,13 @@
   <div class="grid-container">
     <div class="grid-x grid-margin-x small-up-2 medium-up-3">
       <div class="cell">
-        <div class="card" style="width: 250px;">
+        <div class="card" style="width: 350px;">
           <div class="card-divider">
             Points of Interest!
           </div>
           <div class="card-section">
-            {%for i in poi %}
-            <p>{{i}}</p>
+            {%for i in range(lsights) %}
+            <p><strong>{{sights[i]}}</strong><br>{{poi[i]}}</p>
             {% endfor %}
           </div>
         </div>
@@ -87,19 +87,30 @@
       <div id='myMap' style='width: 60vw; height: 60vh;'></div>
       <script type='text/javascript'>
         function loadMapScenario() {
-          var map = new Microsoft.Maps.Map(document.getElementById('myMap'), {
-            /* No need to set credentials if already passed in URL */
-            mapTypeId: Microsoft.Maps.MapTypeId.road,
-            zoom: 18,
-            center: new Microsoft.Maps.Location({{ la }}, {{ lo }})
-                  });
-        map.setView({ mapTypeId: Microsoft.Maps.MapTypeId.streetside });
-              }
-      </script>
-      <script type='text/javascript' src='https://www.bing.com/api/maps/mapcontrol?key={{key}}&callback=loadMapScenario'
-        async defer></script>
-    </div>
-  </div>
+            var map = new Microsoft.Maps.Map(document.getElementById('myMap'), {
+                /* No need to set credentials if already passed in URL */
+                mapTypeId: Microsoft.Maps.MapTypeId.road,
+                zoom: 18,
+                center: new Microsoft.Maps.Location({{la}},{{lo}})
+            });
+            map.setView({ mapTypeId: Microsoft.Maps.MapTypeId.streetside });
+            
+        }
+    </script>
+    <script type='text/javascript' src='https://www.bing.com/api/maps/mapcontrol?key={{key}}&callback=loadMapScenario' async defer></script> 
+    <form action="/like" method="POST">
+      <input type="hidden" name="college_name" value="{{name}}">
+      <input type="hidden" name="template" value="{{self}}">
+
+      <button type=submit id="like-button" class="button button-like 
+      {% if code == 1 -%}
+      liked
+      {% endif %}">
+        Like
+      </button>
+    </form>
+  </body>
+</html>
   
   <h3>Transit Directions</h3>
   {% for i in instruct%}

@@ -181,21 +181,38 @@ def result(college):
     print(url)
     r = requests.get(url)
     print("Bing maps printing...")
-    print(r.text)
+    #print(r.text)
     data = r.json()
+    insights = []
     results = []
     print("_____________________________")
     #for i in data["d"]["results"]:
     for i in data["resourceSets"][0]["resources"][0]["categoryTypeResults"]:#[0]["entities"]:
+        if i["categoryTypeSummary"][0] != '0':
+            insights.append(i["categoryTypeName"])
         count = 0
         #print(i)
         if i["entities"] != []:
             for j in i["entities"]:
                 count += 1
             rand = random.randint(1,count)
-            print(rand)
+            #print(rand)
             results.append(i["entities"][rand-1]["entityName"])
             #print(i["DisplayName"])
+    for i in range(len(insights)):
+        print(i)
+        if insights[i] == "Restaurants":
+            #print("this is not ambiguous")
+            insights[i] = "A Restaurant You May Frequent: "
+        elif insights[i] == "Museums":
+            insights[i] = "A Museum You May Visit: "
+        elif insights[i] == "Attractions":
+            insights[i] = "A Miscellaneous Attraction: "
+        elif insights[i] == "Parks":
+            insights[i] = "A Nearby Park: "
+        elif insights[i] == "Bookstores":
+            insights[i] = "A Nearby Bookstore: "
+
     #weather stuff
     weatherUrl = f'https://archive-api.open-meteo.com/v1/era5?latitude={lat}&longitude={lon}&start_date=2021-01-01&end_date=2021-12-31&daily=temperature_2m_max,temperature_2m_min,rain_sum,snowfall_sum&timezone=America%2FNew_York&temperature_unit=fahrenheit&windspeed_unit=mph&precipitation_unit=inch'
     r = requests.get(weatherUrl)
@@ -212,6 +229,7 @@ def result(college):
         mon = int(date[5:7])
         #print(mon)
         mid = (max + min) / 2
+        #print(mon, snow)
         weather_results[mon-1].append((mid,rain,snow))
     #print(weather_results)
     for i in range(12):
@@ -280,12 +298,13 @@ def result(college):
                         print(f'{j["instruction"]["text"]} (station)')
                         instructions.append(f'- {j["instruction"]["text"]} (station)')
         instructions.append(f'Total duration of trip: {round(duration,2)} hours')
-        isLiked = check_college(session.get('username'),college)
-        if isLiked:
-            x = 1
-    else:
-            x = 0
-    return render_template("results.html", cs = city_state, website = school_site, sal = salary, expi = exp, instruct = instructions, la = lat, lo = lon, key = bingKey, gas = totalGas, poi = results, weath = months, mons = month_list, route = tup, name = college_name, image = iUrl,code=x)
+    # if has_likes(session.get('username')):
+    #     isLiked = check_college(session.get('username'),college)
+    #     if isLiked:
+    #         x = 1
+    # else:
+    #         x = 0
+    return render_template("results.html", lsights = len(insights),sights = insights, cs = city_state, website = "https://" + school_site, sal = salary, expi = exp, instruct = instructions, la = lat, lo = lon, key = bingKey, gas = totalGas, poi = results, weath = months, mons = month_list, route = tup, name = college_name, image = iUrl,code=0)
 
 @app.route("/code", methods = ["POST", "GET"])
 def code():
