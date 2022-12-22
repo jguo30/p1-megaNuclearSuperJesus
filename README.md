@@ -8,7 +8,7 @@
 
 
 ### API KB Links
-- placeholder
+- (https://github.com/stuy-softdev/notes-and-code/blob/main/api_kb/411_on_CollegeScorecard.md)[College Scorecard]
 - placeholder
 
 ### Launch Codes
