@@ -35,7 +35,7 @@ Scripts\activate.bat
 ```
 8. Install requirements with 
 ```
-pip install =-r ../requirements.txt
+pip install -r ../requirements.txt
 ```
 9. Type 
 ```
