@@ -112,12 +112,24 @@ nicoleZ -- 2022-12-20 01:40
 - Started styling the pages
 --------------------------------------------------------------
 
-jacobG, samC, marcJ, nicoleZ -- 2022-12-21 02:30
+jacobG, samC, marcJ, nicoleZ -- 2022-12-21 03:00
 --------------------------------------------------------------
 - Worked on the like button
-- Added more functionalities
+- Added more functionalities (transit and tuition section)
 - Worked more on the search bar
 - More styling
+- Switched slugs from college name to college ID, which fixes all college name issues
 - Fixed other issues that we found
 --------------------------------------------------------------
+samC, marcJ -- 2022-12-22 02:00
+--------------------------------------------------------------
+- Like button working
+- html fixes (was weird after merge yesterday)
+- Favorites page added
+- Fixed bug for colleges with only one 0 in front of ope ID
+--------------------------------------------------------------
+samC -- 2022-12-22 15:19
+--------------------------------------------------------------
+- Returned redirect to login if there is no session (forbidden action)
+- Added kb links, updated launch codes to readme
 ==============================================================
