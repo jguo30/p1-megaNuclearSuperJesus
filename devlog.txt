@@ -132,4 +132,10 @@ samC -- 2022-12-22 15:19
 --------------------------------------------------------------
 - Returned redirect to login if there is no session (forbidden action)
 - Added kb links, updated launch codes to readme
+--------------------------------------------------------------
+samC, jacobG, nicoleZ -- 2022-12-22 21:14
+--------------------------------------------------------------
+- Updated design doc to reflect certain changes in design
 ==============================================================
+
+
