@@ -2,9 +2,8 @@
 ## Roster: Jacob Guo (PM), Marc Jiang (Database Engineer), Sam Cowan (API Tamer/Flask Incorporator), Nicole Zhou (Foundation Magician)
 
 ### Description
-- Our project is an College picker, which is an API based website that offers weather/climate of that region, commute or travel to that location, and other special long run goals.
-
-- The purpose is mainly to help a high school senior prepare for their first year of college, helping explain logistics of getting to and from college, etc
+- Our project is an College picker, which is an API based website where you can search for a college and receive certain info, including weather/climate of that region, commute or travel to that location, points of interest, and other interesting facts.
+- The purpose is mainly to help a high school senior prepare for their first year of college, helping explain the logistics of getting to and from college, and providing them with ideas about places in the surrounding area to visit.
 
 
 ### API KB Links
